@@ -1,2 +1,4 @@
-package controller;public class MainMenuController {
+package controller;
+
+public class MainMenuController {
 }

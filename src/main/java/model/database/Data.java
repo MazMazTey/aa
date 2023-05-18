@@ -1,2 +1,4 @@
-package model.database;public class Data {
+package model.database;
+
+public class Data {
 }

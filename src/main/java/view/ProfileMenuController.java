@@ -1,2 +1,4 @@
-package view;public class ProfileMenuController {
+package view;
+
+public class ProfileMenuController {
 }

@@ -6,9 +6,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
+            fx:controller="view.MainMenuController"
+            prefHeight="400.0" prefWidth="600.0">
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <Label text="Main Menu"/>
+            <Button text="New Game" onMouseClicked="#startNewGame"/>
+            <Button text="Continue Previous Game" onMouseClicked="#continueGame"/>
+            <Button text="Profile Menu" onMouseClicked="#enterProfileMenu"/>
+            <Button text="Leader Board" onMouseClicked="#leaderBoard"/>
+            <Button text="Settings" onMouseClicked="#settings"/>
+            <Button text="Exit" onMouseClicked="#exit"/>
+        </VBox>
+    </center>
 
-</AnchorPane>
+</BorderPane>
