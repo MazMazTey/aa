@@ -1,13 +1,13 @@
 package model;
 
-import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
 
 public class User {
     private String username;
     private String password;
     private String difficulty;
     private int highScore;
-    private Image avatar;
+    private Rectangle avatar;
 
     public User(String username, String password) {
         this.username = username;
@@ -47,11 +47,11 @@ public class User {
         highScore += amount;
     }
 
-    public Image getAvatar() {
+    public Rectangle getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Image avatar) {
+    public void setAvatar(Rectangle avatar) {
         this.avatar = avatar;
     }
 }

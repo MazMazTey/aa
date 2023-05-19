@@ -1,8 +1,9 @@
 package controller;
 
-import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
 import model.AA;
 import view.LoginMenu;
+import view.MainMenu;
 import view.RegisterMenu;
 
 import java.io.IOException;
@@ -28,7 +29,15 @@ public class ProfileController {
         AA.getLoggedInUser().setPassword(password);
     }
 
-    public void setAvatar(Image avatar) {
+    public void setAvatar(Rectangle avatar) {
         AA.getLoggedInUser().setAvatar(avatar);
+    }
+
+    public void back() throws Exception {
+        new MainMenu().start(RegisterMenu.stage);
+    }
+
+    public void customAvatar() {
+        // TODO implement avatar selection from file
     }
 }

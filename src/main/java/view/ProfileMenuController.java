@@ -1,6 +1,7 @@
 package view;
 
 import controller.ProfileController;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -13,6 +14,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.Random;
 
 public class ProfileMenuController {
     private final ProfileController controller;
@@ -22,7 +24,7 @@ public class ProfileMenuController {
     @FXML
     private PasswordField newPassword;
     @FXML
-    private Rectangle rectangle;
+    private Rectangle rectangle1 , rectangle2 , rectangle3;
 
     public ProfileMenuController() {
         this.controller = new ProfileController();
@@ -30,10 +32,33 @@ public class ProfileMenuController {
 
     @FXML
     public void initialize() {
-        rectangle = new Rectangle(30 , 30);
-        rectangle.setFill(new ImagePattern(
+        rectangle1.setFill(new ImagePattern(
                 new Image(ProfileMenu.class.getResource(
-                        "/Images/car.jpg").toExternalForm())));
+                        "/Images/avatar0.jpg").toExternalForm())));
+        rectangle2.setFill(new ImagePattern(
+                new Image(ProfileMenu.class.getResource(
+                        "/Images/avatar1.jpg").toExternalForm())));
+        rectangle3.setFill(new ImagePattern(
+                new Image(ProfileMenu.class.getResource(
+                        "/Images/avatar2.jpg").toExternalForm())));
+        rectangle1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                controller.setAvatar(rectangle1);
+            }
+        });
+        rectangle2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                controller.setAvatar(rectangle2);
+            }
+        });
+        rectangle3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                controller.setAvatar(rectangle3);
+            }
+        });
     }
 
     public void logout(MouseEvent mouseEvent) throws IOException {
@@ -86,8 +111,22 @@ public class ProfileMenuController {
         alert.showAndWait();
     }
 
-    public void setAvatar(MouseEvent mouseEvent) {
-        controller.setAvatar(null);
-        // TODO get clicked image
+    public void back(MouseEvent mouseEvent) throws Exception {
+        controller.back();
+    }
+
+    public void randomAvatar(MouseEvent mouseEvent) {
+        int random = new Random().nextInt();
+        random %= 3;
+        random = Math.abs(random);
+        switch (random) {
+            case 0 -> controller.setAvatar(rectangle1);
+            case 1 -> controller.setAvatar(rectangle2);
+            case 2 -> controller.setAvatar(rectangle3);
+        }
+    }
+
+    public void customAvatar(MouseEvent mouseEvent) {
+        controller.customAvatar();
     }
 }
