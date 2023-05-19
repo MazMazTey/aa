@@ -11,7 +11,7 @@ public class MainMenuController {
         controller = new controller.MainMenuController();
     }
 
-    public void startNewGame(MouseEvent mouseEvent) {
+    public void startNewGame(MouseEvent mouseEvent) throws Exception {
         controller.startNewGame();
     }
 

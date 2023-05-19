@@ -8,11 +8,15 @@ public class User {
     private String difficulty;
     private int highScore;
     private Rectangle avatar;
+    private String shootBallKey;
+    private String freezeKey;
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
         highScore = 0;
+        shootBallKey = "Space";
+        freezeKey = "Tab";
     }
 
     public String getUsername() {
@@ -53,5 +57,21 @@ public class User {
 
     public void setAvatar(Rectangle avatar) {
         this.avatar = avatar;
+    }
+
+    public String getShootBallKey() {
+        return shootBallKey;
+    }
+
+    public void setShootBallKey(String shootBallKey) {
+        this.shootBallKey = shootBallKey;
+    }
+
+    public String getFreezeKey() {
+        return freezeKey;
+    }
+
+    public void setFreezeKey(String freezeKey) {
+        this.freezeKey = freezeKey;
     }
 }
