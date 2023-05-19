@@ -6,6 +6,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import model.AA;
+import model.User;
 
 import java.io.IOException;
 
@@ -44,6 +46,8 @@ public class RegisterMenuController {
     }
 
     public void guestLogin(MouseEvent mouseEvent) throws Exception {
+        User guest = new User("guest" , "");
+        AA.setLoggedInUser(guest);
         new MainMenu().start(RegisterMenu.stage);
     }
 }
