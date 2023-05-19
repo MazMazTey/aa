@@ -1,13 +1,13 @@
 package model;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 public class User {
     private String username;
     private String password;
     private String difficulty;
     private int highScore;
-    private ImageView avatar;
+    private Image avatar;
 
     public User(String username, String password) {
         this.username = username;
@@ -47,11 +47,11 @@ public class User {
         highScore += amount;
     }
 
-    public ImageView getAvatar() {
+    public Image getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(ImageView avatar) {
+    public void setAvatar(Image avatar) {
         this.avatar = avatar;
     }
 }

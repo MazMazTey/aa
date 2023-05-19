@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.ProfileMenuController"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="view.ProfileMenuController">
+    <center>
+        <VBox alignment="CENTER" spacing="15">
+            <Label text="Profile Menu" />
+            <TextField fx:id="newUsername" maxWidth="300" promptText="new username" />
+            <Button onMouseClicked="#changeUsername" text="change username" />
+            <PasswordField fx:id="newPassword" maxWidth="300" promptText="new password" />
+            <Button onMouseClicked="#changePassword" text="change password" />
+            <Label alignment="CENTER" text="Choose Your Avatar" />
+            <HBox alignment="CENTER" spacing="10">
+                <Rectangle fx:id="rectangle" height="30.0" width="30.0" />
+            </HBox>
+            <Button onMouseClicked="#logout" text="Logout" />
+            <Button onMouseClicked="#deleteAccount" text="Delete Account" />
+        </VBox>
+    </center>
 
-</AnchorPane>
+</BorderPane>
