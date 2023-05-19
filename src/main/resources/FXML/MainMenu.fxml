@@ -18,7 +18,7 @@
             <Button text="Profile Menu" onMouseClicked="#enterProfileMenu"/>
             <Button text="Leader Board" onMouseClicked="#leaderBoard"/>
             <Button text="Settings" onMouseClicked="#settings"/>
-            <Button text="Exit" onMouseClicked="#exit"/>
+            <Button text="Exit" onMouseClicked="#Exit"/>
         </VBox>
     </center>
 
