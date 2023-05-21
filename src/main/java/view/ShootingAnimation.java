@@ -28,6 +28,7 @@ public class ShootingAnimation extends Transition {
             double y = ball.getCenterY() - 20;
             if (y <= 300) {
                 this.stop();
+                new RotationAnimation(game , gamePane , game.getCenterCircle(), ball).rotateBall();
             }
             ball.setCenterY(y);
         }
