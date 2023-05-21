@@ -8,6 +8,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.AA;
@@ -43,9 +44,12 @@ public class GameMenu extends Application {
                 String keyName = keyEvent.getCode().getName();
                 if (game.isGameOver()) {
                     System.out.println("Game Over!");
+                    VBox vBox = new VBox();
+                    controller.result(game, vBox , game.getScore());
+                    gamePane.getChildren().add(vBox);
                 }
                 if (keyName.equals(game.getCurrentPlayer().getShootBallKey())
-                        && !game.isGameOver()) {
+                        && !game.isGameOver() && !game.isPaused()) {
                     Ball ball = game.initializeBall(gamePane);
                     controller.shootBall(game , ball , gamePane);
                     numberOfBallsLeft.setText("Number of balls left :" + game.getTotalBalls());
@@ -61,6 +65,9 @@ public class GameMenu extends Application {
                 else if (keyName.equals(game.getCurrentPlayer().getPauseKey()) && game.isPaused()) {
                     game.getRotationAnimation().resumeRotate();
                     controller.resume(game);
+                }
+                else if (keyName.equals(game.getCurrentPlayer().getFreezeKey()) && !game.isPaused()) {
+
                 }
             }
         });

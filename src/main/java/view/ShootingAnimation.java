@@ -58,6 +58,7 @@ public class ShootingAnimation extends Transition {
                     gamePane.setBackground(new Background(new BackgroundFill(Color.GREEN
                             , CornerRadii.EMPTY , Insets.EMPTY)));
                 }
+                game.addScore(5);
                 new RotationAnimation(game , gamePane , game.getCenterCircle(), ball).rotateBall();
             }
             if (!isStopped) ball.setCenterY(y);

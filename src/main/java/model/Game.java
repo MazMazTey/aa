@@ -18,6 +18,7 @@ public class Game {
     private RotationAnimation rotationAnimation;
     private boolean gameOver;
     private boolean isPaused;
+    private int score;
 
     public Game() {
         this.phase = 1;
@@ -28,6 +29,7 @@ public class Game {
         isPaused = false;
         gameOver = false;
         totalBalls = 5;
+        score = 0;
     }
 
     public User getCurrentPlayer() {
@@ -98,5 +100,13 @@ public class Game {
 
     public void setTotalBalls(int totalBalls) {
         this.totalBalls = totalBalls;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void addScore(int score) {
+        this.score += score;
     }
 }

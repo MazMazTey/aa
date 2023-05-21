@@ -24,4 +24,8 @@ public class GameController {
         ball1.getBoundsInParent().intersects(ball2.getBoundsInParent());
         return 0;
     }
+
+    public void result(Game game, int score) {
+        game.getCurrentPlayer().addToHighScore(score);
+    }
 }
