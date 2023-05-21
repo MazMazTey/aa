@@ -31,6 +31,10 @@ public class RotationAnimation{
         this.periodicity = 2000;
     }
 
+    public Timeline getTimeLine() {
+        return timeLine;
+    }
+
     public void rotateBall() {
         rotate = new Rotate();
         rotate.setPivotX(centerCircle.getCenterX());
@@ -47,7 +51,6 @@ public class RotationAnimation{
         );
         timeLine.setCycleCount(Timeline.INDEFINITE);
 
-        game.addBallToCircle(ball , line);
         ball.setRotationAnimation(this);
 
         timeLine.play();

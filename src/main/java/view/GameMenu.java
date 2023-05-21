@@ -1,6 +1,5 @@
 package view;
 
-import controller.GameController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -13,10 +12,10 @@ import model.Game;
 
 public class GameMenu extends Application {
     private final Game game;
-    private final GameController controller;
+    private final GameMenuController controller;
     public GameMenu(Game game) {
         this.game = game;
-        this.controller = new GameController();
+        this.controller = new GameMenuController();
     }
 
     @Override
@@ -30,19 +29,30 @@ public class GameMenu extends Application {
             @Override
             public void handle(KeyEvent keyEvent) {
                 String keyName = keyEvent.getCode().getName();
-                if (keyName.equals(game.getCurrentPlayer().getShootBallKey())) {
+                if (game.isGameOver()) {
+                    System.out.println("Game Over!");
+                }
+                if (keyName.equals(game.getCurrentPlayer().getShootBallKey())
+                        && !game.isGameOver()) {
                     Ball ball = game.initializeBall(gamePane);
                     controller.shootBall(game , ball , gamePane);
+
                     if (game.isGameOver()) {
                         gamePane.getChildren().removeAll();
                         System.exit(0);
                     }
                 }
-                else if (keyName.equals(game.getCurrentPlayer().getFreezeKey())) {
+                else if (keyName.equals(game.getCurrentPlayer().getPauseKey()) && !game.isPaused()) {
                     game.getRotationAnimation().pauseRotate();
+                    try {
+                        controller.pause(game);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-                else if (keyName.equals("1")) {
+                else if (keyName.equals(game.getCurrentPlayer().getPauseKey()) && game.isPaused()) {
                     game.getRotationAnimation().resumeRotate();
+                    controller.resume(game);
                 }
             }
         });

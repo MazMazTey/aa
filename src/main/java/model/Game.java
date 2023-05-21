@@ -17,6 +17,7 @@ public class Game {
 
     private RotationAnimation rotationAnimation;
     private boolean gameOver;
+    private boolean isPaused;
 
     public Game() {
         this.phase = 1;
@@ -24,6 +25,7 @@ public class Game {
         centerCircle = new CenterCircle();
         ballsOnTheCircle = new ArrayList<>();
         ballsAndLines = new HashMap<>();
+        isPaused = false;
         gameOver = false;
         totalBalls = 10;
     }
@@ -52,9 +54,8 @@ public class Game {
         return ballsOnTheCircle;
     }
 
-    public void addBallToCircle(Ball ball , Line line) {
+    public void addBallToCircle(Ball ball) {
         ballsOnTheCircle.add(ball);
-        ballsAndLines.put(ball , line);
     }
 
     public boolean isGameOver() {
@@ -82,5 +83,13 @@ public class Game {
 
     public void setRotationAnimation(RotationAnimation rotationAnimation) {
         this.rotationAnimation = rotationAnimation;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    public void setPaused(boolean paused) {
+        isPaused = paused;
     }
 }

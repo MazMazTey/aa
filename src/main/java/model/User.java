@@ -10,6 +10,7 @@ public class User {
     private Rectangle avatar;
     private String shootBallKey;
     private String freezeKey;
+    private String pauseKey;
 
     public User(String username, String password) {
         this.username = username;
@@ -17,6 +18,7 @@ public class User {
         highScore = 0;
         shootBallKey = "Space";
         freezeKey = "Tab";
+        pauseKey = "P";
     }
 
     public String getUsername() {
@@ -73,5 +75,13 @@ public class User {
 
     public void setFreezeKey(String freezeKey) {
         this.freezeKey = freezeKey;
+    }
+
+    public String getPauseKey() {
+        return pauseKey;
+    }
+
+    public void setPauseKey(String pauseKey) {
+        this.pauseKey = pauseKey;
     }
 }
