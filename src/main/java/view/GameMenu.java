@@ -4,9 +4,13 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.AA;
 import model.Ball;
 import model.Game;
 
@@ -20,11 +24,19 @@ public class GameMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        if (!AA.getLoggedInUser().isGuest()) game.setCurrentPlayer(AA.getLoggedInUser());
         Pane gamePane = FXMLLoader.load(GameMenu.class.getResource("/FXML/GameMenu.fxml"));
         Scene scene = new Scene(gamePane);
         gamePane.getChildren().add(game.getCenterCircle());
         gamePane.getChildren().get(0).requestFocus();
-        Ball ball = game.initializeBall(gamePane);
+        //Ball ball = game.initializeBall(gamePane);
+
+        HBox hBox = new HBox();
+        Text freezeCoolDown = new Text();
+        Text numberOfBallsLeft = new Text("Number of balls left :" + game.getTotalBalls());
+        ProgressBar progressBar = new ProgressBar(1);
+        controller.createHbox(hBox , freezeCoolDown , numberOfBallsLeft , progressBar);
+        gamePane.getChildren().add(hBox);
         game.getCenterCircle().setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
@@ -36,11 +48,7 @@ public class GameMenu extends Application {
                         && !game.isGameOver()) {
                     Ball ball = game.initializeBall(gamePane);
                     controller.shootBall(game , ball , gamePane);
-
-                    if (game.isGameOver()) {
-                        gamePane.getChildren().removeAll();
-                        System.exit(0);
-                    }
+                    numberOfBallsLeft.setText("Number of balls left :" + game.getTotalBalls());
                 }
                 else if (keyName.equals(game.getCurrentPlayer().getPauseKey()) && !game.isPaused()) {
                     game.getRotationAnimation().pauseRotate();

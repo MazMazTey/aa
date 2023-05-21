@@ -5,6 +5,7 @@ import model.Ball;
 import model.Game;
 import view.ShootingAnimation;
 
+
 public class GameController {
 
     public void shootBall(Game game, Ball ball , Pane gamePane) {

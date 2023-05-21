@@ -8,13 +8,15 @@ public class User {
     private String difficulty;
     private int highScore;
     private Rectangle avatar;
+    private final boolean isGuest;
     private String shootBallKey;
     private String freezeKey;
     private String pauseKey;
 
-    public User(String username, String password) {
+    public User(String username, String password, boolean isGuest) {
         this.username = username;
         this.password = password;
+        this.isGuest = isGuest;
         highScore = 0;
         shootBallKey = "Space";
         freezeKey = "Tab";
@@ -59,6 +61,10 @@ public class User {
 
     public void setAvatar(Rectangle avatar) {
         this.avatar = avatar;
+    }
+
+    public boolean isGuest() {
+        return isGuest;
     }
 
     public String getShootBallKey() {

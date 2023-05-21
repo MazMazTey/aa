@@ -1,7 +1,12 @@
 package view;
 
 import javafx.animation.Transition;
+import javafx.geometry.Insets;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import model.Ball;
 import model.CenterCircle;
@@ -41,7 +46,17 @@ public class ShootingAnimation extends Transition {
                         if (ball1.getRotationAnimation() != null)
                             ball1.getRotationAnimation().getTimeLine().stop();
                     }
+                    gamePane.setBackground(new Background(new BackgroundFill(Color.RED
+                            , CornerRadii.EMPTY , Insets.EMPTY)));
                     return;
+                }
+                else if (game.isGameOver()) {
+                    for (Ball ball1 : game.getBallsOnTheCircle()) {
+                        if (ball1.getRotationAnimation() != null)
+                            ball1.getRotationAnimation().getTimeLine().stop();
+                    }
+                    gamePane.setBackground(new Background(new BackgroundFill(Color.GREEN
+                            , CornerRadii.EMPTY , Insets.EMPTY)));
                 }
                 new RotationAnimation(game , gamePane , game.getCenterCircle(), ball).rotateBall();
             }

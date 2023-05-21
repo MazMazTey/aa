@@ -46,7 +46,7 @@ public class RegisterMenuController {
     }
 
     public void guestLogin(MouseEvent mouseEvent) throws Exception {
-        User guest = new User("guest" , "");
+        User guest = new User("guest" , "", true);
         AA.setLoggedInUser(guest);
         new MainMenu().start(RegisterMenu.stage);
     }

@@ -1,7 +1,11 @@
 package view;
 
 import controller.GameController;
+import javafx.geometry.Pos;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import model.Ball;
 import model.Game;
 
@@ -21,5 +25,14 @@ public class GameMenuController {
 
     public void resume(Game game) {
         controller.resume(game);
+    }
+
+    public void createHbox(HBox hBox, Text freezeCoolDown
+            ,Text numberOfBallsLeft, ProgressBar progressBar) {
+        hBox.setAlignment(Pos.CENTER);
+        hBox.getChildren().add(numberOfBallsLeft);
+        hBox.getChildren().add(freezeCoolDown);
+        hBox.setSpacing(30);
+        hBox.getChildren().add(progressBar);
     }
 }

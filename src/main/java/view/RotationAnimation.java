@@ -36,6 +36,7 @@ public class RotationAnimation{
     }
 
     public void rotateBall() {
+        if (game.isGameOver()) return;
         rotate = new Rotate();
         rotate.setPivotX(centerCircle.getCenterX());
         rotate.setPivotY(centerCircle.getCenterY());

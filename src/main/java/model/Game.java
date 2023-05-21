@@ -27,7 +27,7 @@ public class Game {
         ballsAndLines = new HashMap<>();
         isPaused = false;
         gameOver = false;
-        totalBalls = 10;
+        totalBalls = 5;
     }
 
     public User getCurrentPlayer() {
@@ -67,13 +67,12 @@ public class Game {
     }
 
     public Ball initializeBall(Pane gamePane) {
+        totalBalls--;
         if (totalBalls <= 0) {
             gameOver = true;
-            return null;
         }
         Ball ball = new Ball();
         gamePane.getChildren().add(ball);
-        totalBalls--;
         return ball;
     }
 
@@ -91,5 +90,13 @@ public class Game {
 
     public void setPaused(boolean paused) {
         isPaused = paused;
+    }
+
+    public int getTotalBalls() {
+        return totalBalls;
+    }
+
+    public void setTotalBalls(int totalBalls) {
+        this.totalBalls = totalBalls;
     }
 }
