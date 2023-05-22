@@ -1,5 +1,7 @@
 package controller;
 
+import model.Game;
+import view.GameMenu;
 import view.ProfileMenu;
 import view.RegisterMenu;
 import view.Settings;
@@ -7,8 +9,8 @@ import view.Settings;
 import static javafx.application.Platform.exit;
 
 public class MainMenuController {
-    public void startNewGame() {
-
+    public void startNewGame() throws Exception {
+        new GameMenu(new Game()).start(RegisterMenu.stage);
     }
 
     public void continueGame() {

@@ -6,13 +6,22 @@ public class User {
     private String username;
     private String password;
     private String difficulty;
-    private int highScore;
+    private double highScore;
     private Rectangle avatar;
+    private final boolean isGuest;
+    private String shootBallKey;
+    private String freezeKey;
+    private String pauseKey;
 
-    public User(String username, String password) {
+    public User(String username, String password, boolean isGuest) {
         this.username = username;
         this.password = password;
+        this.isGuest = isGuest;
+        difficulty = "Easy";
         highScore = 0;
+        shootBallKey = "Space";
+        freezeKey = "Tab";
+        pauseKey = "P";
     }
 
     public String getUsername() {
@@ -39,12 +48,16 @@ public class User {
         this.difficulty = difficulty;
     }
 
-    public int getHighScore() {
+    public double getHighScore() {
         return highScore;
     }
 
     public void addToHighScore(int amount) {
-        highScore += amount;
+        switch (difficulty) {
+            case "Easy" -> highScore += amount;
+            case "Medium" -> highScore += 1.1 * amount;
+            case "Hard" -> highScore += 1.2 * amount;
+        }
     }
 
     public Rectangle getAvatar() {
@@ -53,5 +66,41 @@ public class User {
 
     public void setAvatar(Rectangle avatar) {
         this.avatar = avatar;
+    }
+
+    public boolean isGuest() {
+        return isGuest;
+    }
+
+    public String getShootBallKey() {
+        return shootBallKey;
+    }
+
+    public void setShootBallKey(String shootBallKey) {
+        this.shootBallKey = shootBallKey;
+    }
+
+    public String getFreezeKey() {
+        return freezeKey;
+    }
+
+    public void setFreezeKey(String freezeKey) {
+        this.freezeKey = freezeKey;
+    }
+
+    public String getPauseKey() {
+        return pauseKey;
+    }
+
+    public void setPauseKey(String pauseKey) {
+        this.pauseKey = pauseKey;
+    }
+
+    public int getFreezeTime() {
+        return switch (difficulty) {
+            case "Easy" -> 7000;
+            case "Medium" -> 5000;
+            default -> 3000;
+        };
     }
 }

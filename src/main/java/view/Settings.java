@@ -31,6 +31,12 @@ public class Settings extends Application {
         RadioButton radioButton1 = (RadioButton) difficulty.getToggles().get(0);
         RadioButton radioButton2 = (RadioButton) difficulty.getToggles().get(1);
         RadioButton radioButton3 = (RadioButton) difficulty.getToggles().get(2);
+        setDifficulty(radioButton1, radioButton2, radioButton3);
+        setDifficulty(radioButton2, radioButton1, radioButton3);
+        setDifficulty(radioButton3, radioButton2, radioButton1);
+    }
+
+    private void setDifficulty(RadioButton radioButton1, RadioButton radioButton2, RadioButton radioButton3) {
         radioButton1.selectedProperty().addListener((observable , oldValue , newValue) -> {
             if (newValue) {
                 radioButton2.setSelected(false);
