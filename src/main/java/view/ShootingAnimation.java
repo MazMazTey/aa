@@ -66,7 +66,21 @@ public class ShootingAnimation extends Transition {
                 }
                 game.addScore(5);
                 freezeCoolDown.setProgress(freezeCoolDown.getProgress() + 0.25);
-                new RotationAnimation(game , gamePane , game.getCenterCircle(), ball).rotateBall();
+                switch (game.getPhase()) {
+                    case 1:
+                        new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
+                        break;
+                    case 2:
+                        new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
+                        for (Ball ball1 : game.getBallsOnTheCircle()) {
+                            new Phase2Animation(game, gamePane , ball1).changeBallSize();
+                        }
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                }
             }
             if (!isStopped) ball.setCenterY(y);
         }

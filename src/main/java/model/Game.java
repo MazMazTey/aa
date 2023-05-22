@@ -101,10 +101,6 @@ public class Game {
         return ballsLeft;
     }
 
-    public void setBallsLeft(int ballsLeft) {
-        this.ballsLeft = ballsLeft;
-    }
-
     public int getScore() {
         return score;
     }
