@@ -51,7 +51,7 @@ public class GameMenu extends Application {
                 if (keyName.equals(game.getCurrentPlayer().getShootBallKey())
                         && !game.isGameOver() && !game.isPaused()) {
                     Ball ball = game.initializeBall(gamePane);
-                    controller.shootBall(game , ball , gamePane);
+                    controller.shootBall(game , ball , gamePane , progressBar);
 
                     int shotBalls = game.getTotalBalls() - game.getBallsLeft(); // change phase
                     controller.checkPhaseChange(shotBalls , game);
@@ -68,7 +68,8 @@ public class GameMenu extends Application {
                 else if (keyName.equals(game.getCurrentPlayer().getPauseKey()) && game.isPaused()) {
                     controller.resume(game);
                 }
-                else if (keyName.equals(game.getCurrentPlayer().getFreezeKey()) && !game.isPaused()) {
+                else if (keyName.equals(game.getCurrentPlayer().getFreezeKey()) && !game.isPaused() && (int) progressBar.getProgress() == 1) {
+                    progressBar.setProgress(0);
                     controller.freeze(game);
                 }
             }

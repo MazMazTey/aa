@@ -2,6 +2,7 @@ package view;
 
 import javafx.animation.Transition;
 import javafx.geometry.Insets;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -20,8 +21,9 @@ public class ShootingAnimation extends Transition {
     private Ball ball;
     private CenterCircle centerCircle;
     private boolean isStopped;
+    private ProgressBar freezeCoolDown;
 
-    public ShootingAnimation(Game game, Pane gamePane, Ball ball, CenterCircle centerCircle) {
+    public ShootingAnimation(Game game, Pane gamePane, Ball ball, CenterCircle centerCircle, ProgressBar progressBar) {
         this.game = game;
         this.gamePane = gamePane;
         this.ball = ball;
@@ -29,6 +31,7 @@ public class ShootingAnimation extends Transition {
         this.setCycleDuration(Duration.millis(800));
         this.setCycleCount(1);
         isStopped = false;
+        freezeCoolDown = progressBar;
     }
 
     @Override
@@ -62,6 +65,7 @@ public class ShootingAnimation extends Transition {
                             , CornerRadii.EMPTY , Insets.EMPTY)));
                 }
                 game.addScore(5);
+                freezeCoolDown.setProgress(freezeCoolDown.getProgress() + 0.25);
                 new RotationAnimation(game , gamePane , game.getCenterCircle(), ball).rotateBall();
             }
             if (!isStopped) ball.setCenterY(y);

@@ -6,7 +6,7 @@ public class User {
     private String username;
     private String password;
     private String difficulty;
-    private int highScore;
+    private double highScore;
     private Rectangle avatar;
     private final boolean isGuest;
     private String shootBallKey;
@@ -48,12 +48,16 @@ public class User {
         this.difficulty = difficulty;
     }
 
-    public int getHighScore() {
+    public double getHighScore() {
         return highScore;
     }
 
     public void addToHighScore(int amount) {
-        highScore += amount;
+        switch (difficulty) {
+            case "Easy" -> highScore += amount;
+            case "Medium" -> highScore += 1.1 * amount;
+            case "Hard" -> highScore += 1.2 * amount;
+        }
     }
 
     public Rectangle getAvatar() {

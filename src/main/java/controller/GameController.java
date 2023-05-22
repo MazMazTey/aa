@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import model.Ball;
@@ -12,8 +13,8 @@ import java.util.TimerTask;
 
 public class GameController {
 
-    public void shootBall(Game game, Ball ball , Pane gamePane) {
-        ShootingAnimation animation = new ShootingAnimation(game , gamePane , ball , game.getCenterCircle());
+    public void shootBall(Game game, Ball ball , Pane gamePane, ProgressBar progressBar) {
+        ShootingAnimation animation = new ShootingAnimation(game , gamePane , ball , game.getCenterCircle() , progressBar);
         animation.play();
     }
     public void pause(Game game) throws Exception {

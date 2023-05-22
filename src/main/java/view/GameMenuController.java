@@ -22,8 +22,8 @@ public class GameMenuController {
         this.controller = new GameController();
     }
 
-    public void shootBall(Game game, Ball ball , Pane gamePane) {
-        controller.shootBall(game , ball , gamePane);
+    public void shootBall(Game game, Ball ball , Pane gamePane, ProgressBar progressBar) {
+        controller.shootBall(game , ball , gamePane , progressBar);
     }
     public void pause(Game game) throws Exception {
         controller.pause(game);
@@ -44,10 +44,10 @@ public class GameMenuController {
 
     public void result(Game game , VBox vBox , int score) {
         controller.result(game , score);
-        vBox.setLayoutX(230);
+        vBox.setLayoutX(210);
         vBox.setLayoutY(500);
         Text text1 = new Text("Game Over!");
-        text1.setFont(Font.font("Verdana" , 24));
+        text1.setFont(Font.font("Verdana" , 44));
         text1.setTextAlignment(TextAlignment.CENTER);
         vBox.getChildren().add(text1);
         Text text2 = new Text("You're Score : " + score);
