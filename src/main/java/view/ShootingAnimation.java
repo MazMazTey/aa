@@ -39,6 +39,9 @@ public class ShootingAnimation extends Transition {
                 this.stop();
                 isStopped = true;
                 game.addBallToCircle(ball);
+                if (game.isSlowed()) {
+                    ball.setFill(Color.BLUE);
+                }
                 if (collide(game)) {
                     System.out.println("You Lost!");
                     game.setGameOver(true);

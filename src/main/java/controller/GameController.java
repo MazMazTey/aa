@@ -1,9 +1,13 @@
 package controller;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import model.Ball;
 import model.Game;
 import view.ShootingAnimation;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class GameController {
@@ -37,5 +41,20 @@ public class GameController {
     public void freeze(Game game) {
         game.setSlowed(true);
         game.getRotationAnimation().slowRotate();
+        for (Ball ball : game.getBallsOnTheCircle()) {
+            ball.setFill(Color.BLUE);
+        }
+        game.getCenterCircle().setFill(Color.BLUE);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                game.setSlowed(false);
+                game.getRotationAnimation().speedRotate();
+                for (Ball ball : game.getBallsOnTheCircle()) {
+                    ball.setFill(Color.BLACK);
+                }
+                game.getCenterCircle().setFill(Color.BLACK);
+            }
+        } , game.getCurrentPlayer().getFreezeTime());
     }
 }

@@ -17,6 +17,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.isGuest = isGuest;
+        difficulty = "Easy";
         highScore = 0;
         shootBallKey = "Space";
         freezeKey = "Tab";
@@ -89,5 +90,13 @@ public class User {
 
     public void setPauseKey(String pauseKey) {
         this.pauseKey = pauseKey;
+    }
+
+    public int getFreezeTime() {
+        return switch (difficulty) {
+            case "Easy" -> 7000;
+            case "Medium" -> 5000;
+            default -> 3000;
+        };
     }
 }

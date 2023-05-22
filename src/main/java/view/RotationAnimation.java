@@ -74,4 +74,10 @@ public class RotationAnimation{
             ball1.getRotationAnimation().timeLine.setRate(0.2);
         }
     }
+
+    public void speedRotate() {
+        for (Ball ball1 : game.getBallsOnTheCircle()) {
+            ball1.getRotationAnimation().timeLine.setRate(1);
+        }
+    }
 }
