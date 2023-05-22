@@ -53,7 +53,7 @@ public class RotationAnimation{
         timeLine.setCycleCount(Timeline.INDEFINITE);
 
         ball.setRotationAnimation(this);
-
+        if (game.isSlowed()) ball.getRotationAnimation().timeLine.setRate(0.2);
         timeLine.play();
     }
 
@@ -66,6 +66,12 @@ public class RotationAnimation{
     public void resumeRotate() {
         for (Ball ball1 : game.getBallsOnTheCircle()) {
             ball1.getRotationAnimation().timeLine.play();
+        }
+    }
+
+    public void slowRotate() {
+        for (Ball ball1 : game.getBallsOnTheCircle()) {
+            ball1.getRotationAnimation().timeLine.setRate(0.2);
         }
     }
 }

@@ -33,7 +33,7 @@ public class ShootingAnimation extends Transition {
 
     @Override
     protected void interpolate(double v) {
-        if (game.getPhase() < 4) {
+        if (game.getPhase() <= 4) {
             double y = ball.getCenterY() - 20;
             if (y <= 300) {
                 this.stop();

@@ -13,11 +13,12 @@ public class Game {
     private final CenterCircle centerCircle;
     private final ArrayList<Ball> ballsOnTheCircle;
     private final HashMap<Ball , Line> ballsAndLines;
-    private int totalBalls;
+    private int ballsLeft , totalBalls;
 
     private RotationAnimation rotationAnimation;
     private boolean gameOver;
     private boolean isPaused;
+    private boolean isSlowed;
     private int score;
 
     public Game() {
@@ -28,8 +29,10 @@ public class Game {
         ballsAndLines = new HashMap<>();
         isPaused = false;
         gameOver = false;
-        totalBalls = 5;
+        isSlowed = false;
         score = 0;
+        totalBalls = 10;
+        ballsLeft = totalBalls;
     }
 
     public User getCurrentPlayer() {
@@ -44,8 +47,8 @@ public class Game {
         return phase;
     }
 
-    public void nextPhase() {
-        phase++;
+    public void setPhase(int phase) {
+        this.phase = phase;
     }
 
     public CenterCircle getCenterCircle() {
@@ -69,8 +72,8 @@ public class Game {
     }
 
     public Ball initializeBall(Pane gamePane) {
-        totalBalls--;
-        if (totalBalls <= 0) {
+        ballsLeft--;
+        if (ballsLeft <= 0) {
             gameOver = true;
         }
         Ball ball = new Ball();
@@ -94,12 +97,12 @@ public class Game {
         isPaused = paused;
     }
 
-    public int getTotalBalls() {
-        return totalBalls;
+    public int getBallsLeft() {
+        return ballsLeft;
     }
 
-    public void setTotalBalls(int totalBalls) {
-        this.totalBalls = totalBalls;
+    public void setBallsLeft(int ballsLeft) {
+        this.ballsLeft = ballsLeft;
     }
 
     public int getScore() {
@@ -108,5 +111,21 @@ public class Game {
 
     public void addScore(int score) {
         this.score += score;
+    }
+
+    public int getTotalBalls() {
+        return totalBalls;
+    }
+
+    public void setTotalBalls(int totalBalls) {
+        this.totalBalls = totalBalls;
+    }
+
+    public boolean isSlowed() {
+        return isSlowed;
+    }
+
+    public void setSlowed(boolean slowed) {
+        isSlowed = slowed;
     }
 }

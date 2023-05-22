@@ -69,4 +69,12 @@ public class GameMenuController {
         vBox.getChildren().add(button);
         vBox.setSpacing(10);
     }
+
+    public void checkPhaseChange(int shotBalls , Game game) {
+        controller.checkPhaseChange(shotBalls , game);
+    }
+
+    public void freeze(Game game) {
+        controller.freeze(game);
+    }
 }

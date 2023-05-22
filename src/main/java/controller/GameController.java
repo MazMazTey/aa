@@ -13,19 +13,29 @@ public class GameController {
         animation.play();
     }
     public void pause(Game game) throws Exception {
+        game.getRotationAnimation().pauseRotate();
         game.setPaused(true);
-        //new PauseMenu().start(RegisterMenu.stage);
+        //new PauseMenu().start(RegisterMenu.stage); // TODO make access to pause menu
     }
 
     public void resume(Game game) {
+        game.getRotationAnimation().resumeRotate();
         game.setPaused(false);
-    }
-    private double distance(Ball ball1 , Ball ball2) {
-        ball1.getBoundsInParent().intersects(ball2.getBoundsInParent());
-        return 0;
     }
 
     public void result(Game game, int score) {
         game.getCurrentPlayer().addToHighScore(score);
+    }
+
+    public void checkPhaseChange(int shotBalls , Game game) {
+        float v = (float) shotBalls / (float) game.getTotalBalls();
+        if (v >= 0.75) game.setPhase(4);
+        else if (v >= 0.5) game.setPhase(3);
+        else if (v >= 0.25) game.setPhase(2);
+    }
+
+    public void freeze(Game game) {
+        game.setSlowed(true);
+        game.getRotationAnimation().slowRotate();
     }
 }

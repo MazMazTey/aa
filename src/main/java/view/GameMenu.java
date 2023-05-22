@@ -34,7 +34,7 @@ public class GameMenu extends Application {
 
         HBox hBox = new HBox();
         Text freezeCoolDown = new Text();
-        Text numberOfBallsLeft = new Text("Number of balls left :" + game.getTotalBalls());
+        Text numberOfBallsLeft = new Text("Number of balls left :" + game.getBallsLeft());
         ProgressBar progressBar = new ProgressBar(1);
         controller.createHbox(hBox , freezeCoolDown , numberOfBallsLeft , progressBar);
         gamePane.getChildren().add(hBox);
@@ -52,10 +52,13 @@ public class GameMenu extends Application {
                         && !game.isGameOver() && !game.isPaused()) {
                     Ball ball = game.initializeBall(gamePane);
                     controller.shootBall(game , ball , gamePane);
-                    numberOfBallsLeft.setText("Number of balls left :" + game.getTotalBalls());
+
+                    int shotBalls = game.getTotalBalls() - game.getBallsLeft(); // change phase
+                    controller.checkPhaseChange(shotBalls , game);
+
+                    numberOfBallsLeft.setText("Number of balls left :" + game.getBallsLeft());
                 }
                 else if (keyName.equals(game.getCurrentPlayer().getPauseKey()) && !game.isPaused()) {
-                    game.getRotationAnimation().pauseRotate();
                     try {
                         controller.pause(game);
                     } catch (Exception e) {
@@ -63,11 +66,10 @@ public class GameMenu extends Application {
                     }
                 }
                 else if (keyName.equals(game.getCurrentPlayer().getPauseKey()) && game.isPaused()) {
-                    game.getRotationAnimation().resumeRotate();
                     controller.resume(game);
                 }
                 else if (keyName.equals(game.getCurrentPlayer().getFreezeKey()) && !game.isPaused()) {
-
+                    controller.freeze(game);
                 }
             }
         });
