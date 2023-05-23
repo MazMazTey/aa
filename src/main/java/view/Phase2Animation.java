@@ -22,7 +22,8 @@ public class Phase2Animation {
     private int duration;
     private double direction;
 
-    public Phase2Animation(Game game, Pane gamePane, Ball ball , GameController gameController) {
+    public Phase2Animation(Game game, Pane gamePane, Ball ball ,
+                           GameController gameController) {
         this.game = game;
         this.controller = gameController;
         this.gamePane = gamePane;
