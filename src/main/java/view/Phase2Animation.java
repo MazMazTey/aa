@@ -1,6 +1,9 @@
 package view;
 
-import javafx.animation.*;
+import controller.GameController;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import model.Ball;
@@ -8,21 +11,22 @@ import model.Game;
 
 public class Phase2Animation {
     private final Game game;
+    private final GameController controller;
     private final Pane gamePane;
     private final Ball ball;
-//    private final Line needle;
-    private SequentialTransition sizeChangeAnimation;
+    private Timeline sizeChangeAnimation;
     private int duration;
 
-    public Phase2Animation(Game game, Pane gamePane, Ball ball) {
+    public Phase2Animation(Game game, Pane gamePane, Ball ball , GameController gameController) {
         this.game = game;
+        this.controller = gameController;
         this.gamePane = gamePane;
         this.ball = ball;
-//        this.needle = new Line(ball.getCenterX() , ball.getCenterY() ,
-//                game.getCenterCircle().getCenterX() ,
-//                game.getCenterCircle().getCenterY());
-//        gamePane.getChildren().add(needle);
         duration = 1000;
+    }
+
+    public Timeline getSizeChangeAnimation() {
+        return sizeChangeAnimation;
     }
 
     public void reverse() {
@@ -34,16 +38,18 @@ public class Phase2Animation {
                 new KeyFrame(Duration.ZERO ,
                         new KeyValue(ball.radiusProperty(), ball.getRadius())) ,
                 new KeyFrame(Duration.millis(duration) ,
-                        new KeyValue(ball.radiusProperty() , ball.getRadius() * (2 + 0.05))));
-        Timeline shrinkTimeline = new Timeline(
-                new KeyFrame(Duration.ZERO ,
-                        new KeyValue(ball.radiusProperty(), ball.getRadius() * (2 + 0.05))) ,
-                new KeyFrame(Duration.millis(duration) ,
-                        new KeyValue(ball.radiusProperty() , ball.getRadius())));
-        SequentialTransition sequentialTransition = new SequentialTransition(ball , growthTimeline , shrinkTimeline);
-        sequentialTransition.setCycleCount(-1);
-        sequentialTransition.play();
-        sizeChangeAnimation = sequentialTransition;
+                        new KeyValue(ball.radiusProperty() , ball.getRadius() * (1 + 0.05))));
+        growthTimeline.setAutoReverse(true);
+        growthTimeline.setCycleCount(-1);
+        growthTimeline.play();
+        sizeChangeAnimation = growthTimeline;
         ball.setPhase2Animation(this);
+    }
+
+    public void stopsSizeChange() {
+        for (Ball ball1 : game.getBallsOnTheCircle()) {
+            if (ball1.getPhase2Animation() != null)
+                ball1.getPhase2Animation().sizeChangeAnimation.stop();
+        }
     }
 }

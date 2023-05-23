@@ -72,14 +72,16 @@ public class RotationAnimation{
 
     public void slowRotate() {
         for (Ball ball1 : game.getBallsOnTheCircle()) {
-            ball1.getRotationAnimation().timeLine.setRate(0.2);
+            if (ball1.getRotationAnimation() != null)
+                ball1.getRotationAnimation().timeLine.setRate(0.2);
         }
     }
 
     public void speedRotate() {
         if (game.isGameOver()) return;
         for (Ball ball1 : game.getBallsOnTheCircle()) {
-            ball1.getRotationAnimation().timeLine.setRate(1);
+            if (ball1.getRotationAnimation() != null)
+                ball1.getRotationAnimation().timeLine.setRate(1);
         }
     }
 }
