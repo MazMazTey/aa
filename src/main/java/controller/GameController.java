@@ -106,7 +106,7 @@ public class GameController {
                         phase2Animation.changeBallSize();
                     }
                     if (ball1.getPhase3Animation() == null)
-                        new Phase3Animation(game , this , gamePane , ball).fade();
+                        new Phase3Animation(game , this , gamePane , ball1).fade();
                 }
                 break;
 //                    case 4:

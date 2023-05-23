@@ -50,4 +50,8 @@ public class RegisterMenuController {
         AA.setLoggedInUser(guest);
         new MainMenu().start(RegisterMenu.stage);
     }
+
+    public void startLoginMenu(MouseEvent mouseEvent) throws IOException {
+        new LoginMenu().start(RegisterMenu.stage);
+    }
 }
