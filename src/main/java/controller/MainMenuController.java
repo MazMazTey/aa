@@ -6,8 +6,6 @@ import view.ProfileMenu;
 import view.RegisterMenu;
 import view.Settings;
 
-import static javafx.application.Platform.exit;
-
 public class MainMenuController {
     public void startNewGame() throws Exception {
         new GameMenu(new Game()).start(RegisterMenu.stage);
@@ -31,6 +29,6 @@ public class MainMenuController {
 
     public void Exit() {
         // TODO save users to gson file
-        exit();
+        System.exit(0);
     }
 }

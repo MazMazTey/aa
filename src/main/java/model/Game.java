@@ -124,4 +124,12 @@ public class Game {
     public void setSlowed(boolean slowed) {
         isSlowed = slowed;
     }
+
+    public void addLine(Ball ball , Line line) {
+        ballsAndLines.put(ball , line);
+    }
+
+    public Line getLineByBall(Ball ball) {
+        return ballsAndLines.get(ball);
+    }
 }

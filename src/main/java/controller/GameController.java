@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import model.Ball;
 import model.Game;
 import view.Phase2Animation;
+import view.Phase3Animation;
 import view.RotationAnimation;
 import view.ShootingAnimation;
 
@@ -86,7 +87,7 @@ public class GameController {
             case 1:
                 new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
                 break;
-            case 2 , 3 , 4:
+            case 2:
                 new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
                 for (Ball ball1 : game.getBallsOnTheCircle()) {
                     if (ball1.getPhase2Animation() == null) {
@@ -96,8 +97,18 @@ public class GameController {
                     }
                 }
                 break;
-//                    case 3:
-//                        break;
+            case 3 , 4:
+                new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
+                for (Ball ball1 : game.getBallsOnTheCircle()) {
+                    if (ball1.getPhase2Animation() == null) {
+                        Phase2Animation phase2Animation = new Phase2Animation(game, gamePane, ball1, this);
+                        phase2Animation.randomReverse();
+                        phase2Animation.changeBallSize();
+                    }
+                    if (ball1.getPhase3Animation() == null)
+                        new Phase3Animation(game , this , gamePane , ball).fade();
+                }
+                break;
 //                    case 4:
 //                        break;
         }
@@ -122,6 +133,8 @@ public class GameController {
                 ball1.getRotationAnimation().getTimeLine().stop();
             if (ball1.getPhase2Animation() != null)
                 ball1.getPhase2Animation().getSizeChangeAnimation().stop();
+            if (ball1.getPhase3Animation() != null)
+                ball1.getPhase3Animation().getFadeAnimation().stop();
         }
     }
 }
