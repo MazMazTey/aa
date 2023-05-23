@@ -90,7 +90,9 @@ public class GameController {
                 new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
                 for (Ball ball1 : game.getBallsOnTheCircle()) {
                     if (ball1.getPhase2Animation() == null) {
-                        new Phase2Animation(game, gamePane, ball1, this).changeBallSize();
+                        Phase2Animation phase2Animation = new Phase2Animation(game, gamePane, ball1, this);
+                        phase2Animation.randomReverse();
+                        phase2Animation.changeBallSize();
                     }
                 }
                 break;

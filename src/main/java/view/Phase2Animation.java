@@ -9,6 +9,10 @@ import javafx.util.Duration;
 import model.Ball;
 import model.Game;
 
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Phase2Animation {
     private final Game game;
     private final GameController controller;
@@ -16,6 +20,7 @@ public class Phase2Animation {
     private final Ball ball;
     private Timeline sizeChangeAnimation;
     private int duration;
+    private double direction;
 
     public Phase2Animation(Game game, Pane gamePane, Ball ball , GameController gameController) {
         this.game = game;
@@ -29,8 +34,23 @@ public class Phase2Animation {
         return sizeChangeAnimation;
     }
 
-    public void reverse() {
-
+    public void randomReverse() {
+        direction = game.getBallsOnTheCircle().get(0).
+                getRotationAnimation().getTimeLine().getRate();
+        for (Ball ball1 : game.getBallsOnTheCircle()) {
+            if (ball1.getRotationAnimation() != null) {
+                ball1.getRotationAnimation().getTimeLine().setRate(-direction);
+            }
+        }
+        direction = -direction;
+        int delay = new Random().nextInt(4000, 6000);
+        System.out.println(delay);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                randomReverse();
+            }
+        } , delay);
     }
 
     public void changeBallSize() {
