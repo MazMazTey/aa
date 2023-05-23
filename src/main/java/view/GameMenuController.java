@@ -42,7 +42,7 @@ public class GameMenuController {
         hBox.getChildren().add(progressBar);
     }
 
-    public void result(Game game , VBox vBox , int score) {
+    public void result(Game game , VBox vBox , int score, Pane gamePane) {
         controller.result(game , score);
         vBox.setLayoutX(210);
         vBox.setLayoutY(500);
@@ -68,6 +68,7 @@ public class GameMenuController {
         button.setAlignment(Pos.CENTER);
         vBox.getChildren().add(button);
         vBox.setSpacing(10);
+        gamePane.getChildren().add(vBox);
     }
 
     public void checkPhaseChange(int shotBalls , Game game) {
@@ -76,5 +77,14 @@ public class GameMenuController {
 
     public void freeze(Game game) {
         controller.freeze(game);
+    }
+
+    public boolean collide(Game game) {
+        return controller.collide(game);
+    }
+
+
+    public void lose(Game game, Pane gamePane) {
+        controller.lose(game , gamePane);
     }
 }

@@ -15,7 +15,7 @@ public class RotationAnimation{
     private final Game game;
     private final CenterCircle centerCircle;
     private final Ball ball;
-    private final Line line;
+    private final Line needle;
     private Timeline timeLine;
     private Rotate rotate;
     private double periodicity;
@@ -25,8 +25,8 @@ public class RotationAnimation{
         this.centerCircle = centerCircle;
         this.ball = ball;
         this.game = game;
-        this.line = new Line(ball.getCenterX() , ball.getCenterY() , centerCircle.getCenterX() , centerCircle.getCenterY());
-        gamePane.getChildren().add(line);
+        this.needle = new Line(ball.getCenterX() , ball.getCenterY() , centerCircle.getCenterX() , centerCircle.getCenterY());
+        gamePane.getChildren().add(needle);
         game.setRotationAnimation(this);
         this.periodicity = 2000;
     }
@@ -43,9 +43,9 @@ public class RotationAnimation{
         ball.translateXProperty().bind(centerCircle.translateXProperty());
         ball.translateYProperty().bind(centerCircle.translateYProperty());
         ball.getTransforms().add(rotate);
-        line.translateXProperty().bind(centerCircle.translateXProperty());
-        line.translateYProperty().bind(centerCircle.translateYProperty());
-        line.getTransforms().add(rotate);
+        needle.translateXProperty().bind(centerCircle.translateXProperty());
+        needle.translateYProperty().bind(centerCircle.translateYProperty());
+        needle.getTransforms().add(rotate);
         timeLine = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(rotate.angleProperty(), 0)),
                 new KeyFrame(Duration.millis(periodicity), new KeyValue(rotate.angleProperty(), 360))
@@ -72,14 +72,16 @@ public class RotationAnimation{
 
     public void slowRotate() {
         for (Ball ball1 : game.getBallsOnTheCircle()) {
-            ball1.getRotationAnimation().timeLine.setRate(0.2);
+            if (ball1.getRotationAnimation() != null)
+                ball1.getRotationAnimation().timeLine.setRate(0.2);
         }
     }
 
     public void speedRotate() {
         if (game.isGameOver()) return;
         for (Ball ball1 : game.getBallsOnTheCircle()) {
-            ball1.getRotationAnimation().timeLine.setRate(1);
+            if (ball1.getRotationAnimation() != null)
+                ball1.getRotationAnimation().timeLine.setRate(1);
         }
     }
 }
