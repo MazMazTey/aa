@@ -55,8 +55,10 @@ public class GameMenuController {
         text2.setFont(Font.font("Verdana" , 20));
         text2.setTextAlignment(TextAlignment.CENTER);
         vBox.getChildren().add(text2);
-        Button button = new Button("Back To Main Menu" );
-        button.setOnAction(new EventHandler<ActionEvent>() {
+        HBox hBox = new HBox();
+
+        Button backButton = new Button("Back To Main Menu" );
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 try {
@@ -66,8 +68,22 @@ public class GameMenuController {
                 }
             }
         });
-        button.setAlignment(Pos.CENTER);
-        vBox.getChildren().add(button);
+        backButton.setAlignment(Pos.CENTER);
+        hBox.getChildren().add(backButton);
+        Button leaderBoardButton = new Button("Leader Board");
+        leaderBoardButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    new LeaderBoard().start(RegisterMenu.stage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        hBox.getChildren().add(leaderBoardButton);
+        hBox.setSpacing(5);
+        vBox.getChildren().add(hBox);
         vBox.setSpacing(10);
         gamePane.getChildren().add(vBox);
     }
