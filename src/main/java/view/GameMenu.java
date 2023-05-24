@@ -84,13 +84,10 @@ public class GameMenu extends Application {
                 }
                 else if (keyName.equals(game.getCurrentPlayer().getPauseKey()) && !game.isPaused()) {
                     try {
-                        controller.pause(game);
+                        controller.pause(stage , scene, game);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-                }
-                else if (keyName.equals(game.getCurrentPlayer().getPauseKey()) && game.isPaused()) {
-                    controller.resume(game);
                 }
                 else if (keyName.equals(game.getCurrentPlayer().getFreezeKey()) && !game.isPaused() && progressBar.getProgress() >= 0.99) {
                     progressBar.setProgress(0);

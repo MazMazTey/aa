@@ -58,19 +58,6 @@ public class RotationAnimation{
         timeLine.play();
     }
 
-    public void pauseRotate() {
-        for (Ball ball1 : game.getBallsOnTheCircle()) {
-            ball1.getRotationAnimation().timeLine.pause();
-        }
-        // TODO replace this with parallel transition
-    }
-
-    public void resumeRotate() {
-        for (Ball ball1 : game.getBallsOnTheCircle()) {
-            ball1.getRotationAnimation().timeLine.play();
-        }
-    }
-
     public void slowRotate() {
         for (Ball ball1 : game.getBallsOnTheCircle()) {
             if (ball1.getRotationAnimation() != null)

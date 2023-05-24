@@ -4,6 +4,7 @@ import controller.GameController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.HBox;
@@ -12,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 import model.Ball;
 import model.Game;
 
@@ -25,12 +27,8 @@ public class GameMenuController {
     public void shootBall(Game game, Ball ball , Pane gamePane, ProgressBar progressBar , Text showScore) {
         controller.shootBall(game , ball , gamePane , progressBar , showScore);
     }
-    public void pause(Game game) throws Exception {
-        controller.pause(game);
-    }
-
-    public void resume(Game game) {
-        controller.resume(game);
+    public void pause(Stage stage , Scene scene, Game game) throws Exception {
+        controller.pause(stage, scene, game);
     }
 
     public void createHbox(HBox hBox, Text freezeCoolDown
