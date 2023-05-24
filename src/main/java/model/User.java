@@ -1,13 +1,15 @@
 package model;
 
-import javafx.scene.shape.Rectangle;
+import org.jetbrains.annotations.NotNull;
 
-public class User {
+import java.net.URL;
+
+public class User implements Comparable<User>{
     private String username;
     private String password;
     private String difficulty;
-    private double highScore;
-    private Rectangle avatar;
+    private int highScore;
+    private URL avatarPath;
     private final boolean isGuest;
     private String shootBallKey;
     private String freezeKey;
@@ -48,24 +50,24 @@ public class User {
         this.difficulty = difficulty;
     }
 
-    public double getHighScore() {
+    public int getHighScore() {
         return highScore;
     }
 
     public void addToHighScore(int amount) {
         switch (difficulty) {
             case "Easy" -> highScore += amount;
-            case "Medium" -> highScore += 1.1 * amount;
-            case "Hard" -> highScore += 1.2 * amount;
+            case "Medium" -> highScore += 1.2 * amount;
+            case "Hard" -> highScore += 1.4 * amount;
         }
     }
 
-    public Rectangle getAvatar() {
-        return avatar;
+    public URL getAvatarPath() {
+        return avatarPath;
     }
 
-    public void setAvatar(Rectangle avatar) {
-        this.avatar = avatar;
+    public void setAvatarPath(URL avatarPath) {
+        this.avatarPath = avatarPath;
     }
 
     public boolean isGuest() {
@@ -102,5 +104,10 @@ public class User {
             case "Medium" -> 5000;
             default -> 3000;
         };
+    }
+
+    @Override
+    public int compareTo(@NotNull User o) {
+        return this.highScore - o.highScore;
     }
 }

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.database.DataUtilities;
 
 import java.net.URL;
 
@@ -20,6 +21,12 @@ public class RegisterMenu extends Application {
         stage.setTitle("aa");
         stage.setScene(scene);
         stage.show();
+    }
+
+    @Override
+    public void init() throws Exception {
+        super.init();
+        DataUtilities.fetchData();
     }
 
     public static void main(String[] args) {

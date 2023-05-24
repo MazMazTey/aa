@@ -1,12 +1,14 @@
 package controller;
 
+import model.AA;
 import model.Game;
+import model.database.DataUtilities;
 import view.GameMenu;
 import view.ProfileMenu;
 import view.RegisterMenu;
 import view.Settings;
 
-import static javafx.application.Platform.exit;
+import java.io.IOException;
 
 public class MainMenuController {
     public void startNewGame() throws Exception {
@@ -22,15 +24,16 @@ public class MainMenuController {
     }
 
     public void leaderBoard() {
-
+        AA.leaderBoard();
     }
 
     public void settings() throws Exception {
         new Settings().start(RegisterMenu.stage);
     }
 
-    public void Exit() {
+    public void Exit() throws IOException {
         // TODO save users to gson file
-        exit();
+        DataUtilities.pushData();
+        System.exit(0);
     }
 }

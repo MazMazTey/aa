@@ -21,6 +21,8 @@
                 <Button text="Reset" onMouseClicked="#reset"/>
                 <Button text="Continue as guest" onMouseClicked="#guestLogin"/>
             </HBox>
+            <Button text="Already Have An Account" onMouseClicked="#startLoginMenu"/>
+            <Button text="Exit" onMouseClicked="#exit"/>
         </VBox>
     </center>
 

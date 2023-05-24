@@ -23,9 +23,9 @@ public class Phase2Animation {
     private double direction;
 
     public Phase2Animation(Game game, Pane gamePane, Ball ball ,
-                           GameController gameController) {
+                           GameController controller) {
         this.game = game;
-        this.controller = gameController;
+        this.controller = controller;
         this.gamePane = gamePane;
         this.ball = ball;
         duration = 1000;
@@ -44,11 +44,15 @@ public class Phase2Animation {
             }
         }
         direction = -direction;
-        int delay = new Random().nextInt(4000, 6000);
+        int delay = new Random().nextInt(4000 , 6000);
         System.out.println(delay);
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
+                if (game.isGameOver()) {
+                    this.cancel();
+                    return;
+                }
                 randomReverse();
             }
         } , delay);
@@ -67,10 +71,4 @@ public class Phase2Animation {
         ball.setPhase2Animation(this);
     }
 
-    public void stopsSizeChange() {
-        for (Ball ball1 : game.getBallsOnTheCircle()) {
-            if (ball1.getPhase2Animation() != null)
-                ball1.getPhase2Animation().sizeChangeAnimation.stop();
-        }
-    }
 }

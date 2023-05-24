@@ -28,6 +28,7 @@ public class RotationAnimation{
         this.needle = new Line(ball.getCenterX() , ball.getCenterY() , centerCircle.getCenterX() , centerCircle.getCenterY());
         gamePane.getChildren().add(needle);
         game.setRotationAnimation(this);
+        game.addLine(ball , needle);
         this.periodicity = 2000;
     }
 

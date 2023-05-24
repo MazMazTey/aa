@@ -4,6 +4,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import model.AA;
 
+import java.io.IOException;
+
 public class MainMenuController {
     private final controller.MainMenuController controller;
 
@@ -39,7 +41,7 @@ public class MainMenuController {
         controller.settings();
     }
 
-    public void Exit(MouseEvent mouseEvent) {
+    public void Exit(MouseEvent mouseEvent) throws IOException {
         controller.Exit();
     }
 }
