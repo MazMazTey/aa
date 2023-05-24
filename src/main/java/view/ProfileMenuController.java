@@ -13,6 +13,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Optional;
 import java.util.Random;
 
@@ -25,6 +26,7 @@ public class ProfileMenuController {
     private PasswordField newPassword;
     @FXML
     private Rectangle rectangle1 , rectangle2 , rectangle3;
+    private URL url1 , url2 , url3;
 
     public ProfileMenuController() {
         this.controller = new ProfileController();
@@ -32,31 +34,34 @@ public class ProfileMenuController {
 
     @FXML
     public void initialize() {
+        url1 = ProfileMenu.class.getResource(
+                "/Images/avatar0.jpg");
         rectangle1.setFill(new ImagePattern(
-                new Image(ProfileMenu.class.getResource(
-                        "/Images/avatar0.jpg").toExternalForm())));
+                new Image(url1.toExternalForm())));
+        url2 = ProfileMenu.class.getResource(
+                "/Images/avatar1.jpg");
         rectangle2.setFill(new ImagePattern(
-                new Image(ProfileMenu.class.getResource(
-                        "/Images/avatar1.jpg").toExternalForm())));
+                new Image(url2.toExternalForm())));
+        url3 = ProfileMenu.class.getResource(
+                "/Images/avatar2.jpg");
         rectangle3.setFill(new ImagePattern(
-                new Image(ProfileMenu.class.getResource(
-                        "/Images/avatar2.jpg").toExternalForm())));
+                new Image(url3.toExternalForm())));
         rectangle1.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                controller.setAvatar(rectangle1);
+                controller.setAvatar(url1);
             }
         });
         rectangle2.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                controller.setAvatar(rectangle2);
+                controller.setAvatar(url2);
             }
         });
         rectangle3.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                controller.setAvatar(rectangle3);
+                controller.setAvatar(url3);
             }
         });
     }
@@ -120,9 +125,9 @@ public class ProfileMenuController {
         random %= 3;
         random = Math.abs(random);
         switch (random) {
-            case 0 -> controller.setAvatar(rectangle1);
-            case 1 -> controller.setAvatar(rectangle2);
-            case 2 -> controller.setAvatar(rectangle3);
+            case 0 -> controller.setAvatar(url1);
+            case 1 -> controller.setAvatar(url2);
+            case 2 -> controller.setAvatar(url3);
         }
     }
 

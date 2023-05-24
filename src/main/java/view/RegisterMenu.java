@@ -7,7 +7,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.database.DataUtilities;
 
-import java.io.FileNotFoundException;
 import java.net.URL;
 
 public class RegisterMenu extends Application {
@@ -24,7 +23,9 @@ public class RegisterMenu extends Application {
         stage.show();
     }
 
-    public void initialize() throws FileNotFoundException {
+    @Override
+    public void init() throws Exception {
+        super.init();
         DataUtilities.fetchData();
     }
 

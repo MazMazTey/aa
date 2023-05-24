@@ -1,13 +1,13 @@
 package model;
 
-import javafx.scene.shape.Rectangle;
+import java.net.URL;
 
 public class User {
     private String username;
     private String password;
     private String difficulty;
     private double highScore;
-    private Rectangle avatar;
+    private URL avatarPath;
     private final boolean isGuest;
     private String shootBallKey;
     private String freezeKey;
@@ -60,12 +60,12 @@ public class User {
         }
     }
 
-    public Rectangle getAvatar() {
-        return avatar;
+    public URL getAvatarPath() {
+        return avatarPath;
     }
 
-    public void setAvatar(Rectangle avatar) {
-        this.avatar = avatar;
+    public void setAvatarPath(URL avatarPath) {
+        this.avatarPath = avatarPath;
     }
 
     public boolean isGuest() {

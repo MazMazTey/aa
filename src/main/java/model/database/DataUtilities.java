@@ -20,7 +20,6 @@ public class DataUtilities {
         Gson gson = new Gson();
         String fileLine = dataScanner.nextLine();
         Data fetchedData = gson.fromJson(fileLine , Data.class);
-        Data fetchedData1 = gson.fromJson(fileLine , Data.class);
 
         ArrayList<User> usersToBeAdded = fetchedData.getAllUsers();
         AA.addAllUsers(usersToBeAdded);

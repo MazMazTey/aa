@@ -54,4 +54,8 @@ public class RegisterMenuController {
     public void startLoginMenu(MouseEvent mouseEvent) throws IOException {
         new LoginMenu().start(RegisterMenu.stage);
     }
+
+    public void exit(MouseEvent mouseEvent) throws IOException {
+        controller.exit();
+    }
 }

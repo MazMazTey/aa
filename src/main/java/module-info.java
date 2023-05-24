@@ -4,7 +4,7 @@ module aa {
     requires com.google.gson;
 
     exports view;
-//    exports model.User;
     opens view to javafx.fxml;
+    opens model to com.google.gson;
     opens model.database to com.google.gson;
 }

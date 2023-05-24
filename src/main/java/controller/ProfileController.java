@@ -1,12 +1,12 @@
 package controller;
 
-import javafx.scene.shape.Rectangle;
 import model.AA;
 import view.LoginMenu;
 import view.MainMenu;
 import view.RegisterMenu;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class ProfileController {
     public void logout() throws IOException {
@@ -15,6 +15,7 @@ public class ProfileController {
     }
 
     public void deleteAccount() throws Exception {
+        AA.getAllUsers().remove(AA.getLoggedInUser().getUsername());
         AA.setLoggedInUser(null);
         new RegisterMenu().start(RegisterMenu.stage);
     }
@@ -29,8 +30,8 @@ public class ProfileController {
         AA.getLoggedInUser().setPassword(password);
     }
 
-    public void setAvatar(Rectangle avatar) {
-        AA.getLoggedInUser().setAvatar(avatar);
+    public void setAvatar(URL avatarPath) {
+        AA.getLoggedInUser().setAvatarPath(avatarPath);
     }
 
     public void back() throws Exception {
