@@ -5,7 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.database.DataUtilities;
 
+import java.io.FileNotFoundException;
 import java.net.URL;
 
 public class RegisterMenu extends Application {
@@ -20,6 +22,10 @@ public class RegisterMenu extends Application {
         stage.setTitle("aa");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void initialize() throws FileNotFoundException {
+        DataUtilities.fetchData();
     }
 
     public static void main(String[] args) {

@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AA {
@@ -24,5 +25,15 @@ public class AA {
 
     public static User getUserByUsername(String username) {
         return allUsers.get(username);
+    }
+
+    public static void addAllUsers(ArrayList<User> usersToBeAdded) {
+        for (User user : usersToBeAdded) {
+            allUsers.put(user.getUsername() , user);
+        }
+    }
+
+    public static HashMap<String , User> getAllUsers() {
+        return allUsers;
     }
 }

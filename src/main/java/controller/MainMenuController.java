@@ -1,10 +1,13 @@
 package controller;
 
 import model.Game;
+import model.database.DataUtilities;
 import view.GameMenu;
 import view.ProfileMenu;
 import view.RegisterMenu;
 import view.Settings;
+
+import java.io.IOException;
 
 public class MainMenuController {
     public void startNewGame() throws Exception {
@@ -27,8 +30,9 @@ public class MainMenuController {
         new Settings().start(RegisterMenu.stage);
     }
 
-    public void Exit() {
+    public void Exit() throws IOException {
         // TODO save users to gson file
+        DataUtilities.pushData();
         System.exit(0);
     }
 }
