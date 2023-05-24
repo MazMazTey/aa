@@ -108,6 +108,6 @@ public class User implements Comparable<User>{
 
     @Override
     public int compareTo(@NotNull User o) {
-        return this.highScore - o.highScore;
+        return o.highScore - this.highScore;
     }
 }

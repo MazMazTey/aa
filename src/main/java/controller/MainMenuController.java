@@ -1,12 +1,8 @@
 package controller;
 
-import model.AA;
 import model.Game;
 import model.database.DataUtilities;
-import view.GameMenu;
-import view.ProfileMenu;
-import view.RegisterMenu;
-import view.Settings;
+import view.*;
 
 import java.io.IOException;
 
@@ -23,8 +19,8 @@ public class MainMenuController {
         new ProfileMenu().start(RegisterMenu.stage);
     }
 
-    public void leaderBoard() {
-        AA.leaderBoard();
+    public void leaderBoard() throws Exception {
+        new LeaderBoard().start(RegisterMenu.stage);
     }
 
     public void settings() throws Exception {
@@ -32,7 +28,6 @@ public class MainMenuController {
     }
 
     public void Exit() throws IOException {
-        // TODO save users to gson file
         DataUtilities.pushData();
         System.exit(0);
     }

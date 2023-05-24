@@ -33,7 +33,7 @@ public class MainMenuController {
         controller.enterProfileMenu();
     }
 
-    public void leaderBoard(MouseEvent mouseEvent) {
+    public void leaderBoard(MouseEvent mouseEvent) throws Exception {
         controller.leaderBoard();
     }
 
