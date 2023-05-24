@@ -22,8 +22,8 @@ public class GameMenuController {
         this.controller = new GameController();
     }
 
-    public void shootBall(Game game, Ball ball , Pane gamePane, ProgressBar progressBar) {
-        controller.shootBall(game , ball , gamePane , progressBar);
+    public void shootBall(Game game, Ball ball , Pane gamePane, ProgressBar progressBar , Text showScore) {
+        controller.shootBall(game , ball , gamePane , progressBar , showScore);
     }
     public void pause(Game game) throws Exception {
         controller.pause(game);
@@ -34,9 +34,10 @@ public class GameMenuController {
     }
 
     public void createHbox(HBox hBox, Text freezeCoolDown
-            ,Text numberOfBallsLeft, ProgressBar progressBar) {
+            , Text numberOfBallsLeft, ProgressBar progressBar, Text score) {
         hBox.setAlignment(Pos.CENTER);
         hBox.getChildren().add(numberOfBallsLeft);
+        hBox.getChildren().add(score);
         hBox.getChildren().add(freezeCoolDown);
         hBox.setSpacing(30);
         hBox.getChildren().add(progressBar);

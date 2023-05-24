@@ -7,6 +7,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import model.Ball;
 import model.Game;
 import view.Phase2Animation;
@@ -21,9 +22,9 @@ import java.util.TimerTask;
 
 public class GameController {
 
-    public void shootBall(Game game, Ball ball, Pane gamePane, ProgressBar progressBar) {
+    public void shootBall(Game game, Ball ball, Pane gamePane, ProgressBar progressBar, Text showScore) {
         ShootingAnimation animation = new ShootingAnimation(game, gamePane,
-                ball, game.getCenterCircle(), progressBar, this);
+                ball, game.getCenterCircle(), progressBar, this , showScore);
         animation.play();
     }
 

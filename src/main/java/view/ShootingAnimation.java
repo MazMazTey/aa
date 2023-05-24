@@ -6,6 +6,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.Ball;
 import model.CenterCircle;
@@ -19,13 +20,16 @@ public class ShootingAnimation extends Transition {
     private CenterCircle centerCircle;
     private boolean isStopped;
     private ProgressBar freezeCoolDown;
+    private Text showScore;
 
-    public ShootingAnimation(Game game, Pane gamePane, Ball ball, CenterCircle centerCircle, ProgressBar progressBar, GameController gameController) {
+    public ShootingAnimation(Game game, Pane gamePane, Ball ball, CenterCircle centerCircle,
+                             ProgressBar progressBar, GameController gameController , Text showScore) {
         this.game = game;
         this.controller = gameController;
         this.gamePane = gamePane;
         this.ball = ball;
         this.centerCircle = centerCircle;
+        this.showScore = showScore;
         this.setCycleDuration(Duration.millis(800));
         this.setCycleCount(1);
         isStopped = false;
@@ -40,6 +44,8 @@ public class ShootingAnimation extends Transition {
                 this.stop();
                 isStopped = true;
                 game.addBallToCircle(ball);
+                game.addScore(5);
+                showScore.setText("Score : " + game.getScore());
                 if (game.isSlowed()) {
                     ball.setFill(Color.BLUE);
                 }
@@ -47,10 +53,8 @@ public class ShootingAnimation extends Transition {
                     gamePane.getChildren().add(new Line(centerCircle.getCenterX() ,
                             centerCircle.getCenterY() , ball.getCenterX() , ball.getCenterY()));
                     controller.win(game, gamePane);
-                    game.addScore(5);
                     return;
                 }
-                game.addScore(5);
                 freezeCoolDown.setProgress(freezeCoolDown.getProgress() + 0.25);
                 controller.changePhase(game.getPhase() , game , gamePane , ball);
             }

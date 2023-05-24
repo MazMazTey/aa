@@ -39,7 +39,8 @@ public class GameMenu extends Application {
         Text freezeCoolDown = new Text();
         Text numberOfBallsLeft = new Text("Number of balls left : " + game.getBallsLeft());
         ProgressBar progressBar = new ProgressBar(1);
-        controller.createHbox(hBox , freezeCoolDown , numberOfBallsLeft , progressBar);
+        Text showScore = new Text("Score : " + game.getScore());
+        controller.createHbox(hBox , freezeCoolDown , numberOfBallsLeft , progressBar , showScore);
         gamePane.getChildren().add(hBox);
         Text showPhase = new Text("Phase : " + game.getPhase());
         showPhase.setLayoutX(540);
@@ -73,7 +74,7 @@ public class GameMenu extends Application {
                 if (keyName.equals(game.getCurrentPlayer().getShootBallKey())
                         && !game.isGameOver() && !game.isPaused()) {
                     Ball ball = game.initializeBall(gamePane);
-                    controller.shootBall(game , ball , gamePane , progressBar);
+                    controller.shootBall(game , ball , gamePane , progressBar , showScore);
 
                     int shotBalls = game.getTotalBalls() - game.getBallsLeft(); // change phase
                     controller.checkPhaseChange(shotBalls , game);
