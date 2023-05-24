@@ -2,6 +2,7 @@ module aa {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.google.gson;
+    requires annotations;
 
     exports view;
     opens view to javafx.fxml;

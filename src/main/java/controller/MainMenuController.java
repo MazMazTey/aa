@@ -1,5 +1,6 @@
 package controller;
 
+import model.AA;
 import model.Game;
 import model.database.DataUtilities;
 import view.GameMenu;
@@ -23,7 +24,7 @@ public class MainMenuController {
     }
 
     public void leaderBoard() {
-
+        AA.leaderBoard();
     }
 
     public void settings() throws Exception {

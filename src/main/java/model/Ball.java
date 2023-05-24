@@ -11,6 +11,7 @@ public class Ball extends Circle {
     private RotationAnimation rotationAnimation;
     private Phase2Animation phase2Animation;
     private Phase3Animation phase3Animation;
+    private Color defaultColor;
     private Text number;
     public Ball() {
         super(300, 600, 9, Color.BLACK);
@@ -18,6 +19,7 @@ public class Ball extends Circle {
         rotationAnimation = null;
         phase2Animation = null;
         phase3Animation = null;
+        defaultColor = Color.BLACK;
     }
 
     public RotationAnimation getRotationAnimation() {
@@ -42,5 +44,13 @@ public class Ball extends Circle {
 
     public void setPhase3Animation(Phase3Animation phase3Animation) {
         this.phase3Animation = phase3Animation;
+    }
+
+    public Color getDefaultColor() {
+        return defaultColor;
+    }
+
+    public void setDefaultColor(Color defaultColor) {
+        this.defaultColor = defaultColor;
     }
 }

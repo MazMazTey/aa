@@ -62,7 +62,7 @@ public class GameController {
                 game.setSlowed(false);
                 game.getRotationAnimation().speedRotate();
                 for (Ball ball : game.getBallsOnTheCircle()) {
-                    ball.setFill(Color.BLACK);
+                    ball.setFill(ball.getDefaultColor());
                 }
                 game.getCenterCircle().setFill(Color.BLACK);
             }
@@ -90,6 +90,8 @@ public class GameController {
             case 2:
                 new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
                 for (Ball ball1 : game.getBallsOnTheCircle()) {
+                    ball1.setDefaultColor(Color.GREENYELLOW);
+                    if (!game.isSlowed()) ball1.setFill(Color.GREENYELLOW);
                     if (ball1.getPhase2Animation() == null) {
                         Phase2Animation phase2Animation = new Phase2Animation(game, gamePane, ball1, this);
                         phase2Animation.randomReverse();
@@ -100,6 +102,8 @@ public class GameController {
             case 3 , 4:
                 new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
                 for (Ball ball1 : game.getBallsOnTheCircle()) {
+                    ball1.setDefaultColor(Color.CRIMSON);
+                    if (!game.isSlowed()) ball1.setFill(Color.CRIMSON);
                     if (ball1.getPhase2Animation() == null) {
                         Phase2Animation phase2Animation = new Phase2Animation(game, gamePane, ball1, this);
                         phase2Animation.randomReverse();
