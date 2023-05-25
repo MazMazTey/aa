@@ -1,18 +1,21 @@
 package controller;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import model.Ball;
 import model.Game;
-import view.Phase2Animation;
-import view.Phase3Animation;
-import view.RotationAnimation;
-import view.ShootingAnimation;
+import view.*;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -21,21 +24,92 @@ import java.util.TimerTask;
 
 public class GameController {
 
-    public void shootBall(Game game, Ball ball, Pane gamePane, ProgressBar progressBar) {
+    public void shootBall(Game game, Ball ball, Pane gamePane, ProgressBar progressBar, Text showScore) {
         ShootingAnimation animation = new ShootingAnimation(game, gamePane,
-                ball, game.getCenterCircle(), progressBar, this);
+                ball, game.getCenterCircle(), progressBar, this , showScore);
         animation.play();
     }
 
-    public void pause(Game game) throws Exception {
-        game.getRotationAnimation().pauseRotate();
+    public void pause(Stage stage , Scene scene , Game game) throws Exception {
+        int totalBalls = game.getTotalBalls();
+        pauseAllAnimations(game);
         game.setPaused(true);
-        //new PauseMenu().start(RegisterMenu.stage); // TODO make access to pause menu
-    }
+        BorderPane borderPane = FXMLLoader.load(GameController.class.getResource("/FXML/PauseMenu.fxml"));
+        Scene newScene = new Scene(borderPane);
+        VBox vBox = new VBox();
+        borderPane.setCenter(vBox);
+        vBox.setAlignment(Pos.CENTER);
+        Label label = new Label();
+        label.setText("Pause Menu");
+        label.setLabelFor(borderPane);
+        vBox.getChildren().add(label);
+        vBox.getChildren().add(new Text("Shoot Key : " + game.getCurrentPlayer().getShootBallKey()));
+        vBox.getChildren().add(new Text("Freeze Key : " + game.getCurrentPlayer().getFreezeKey()));
 
-    public void resume(Game game) {
-        game.getRotationAnimation().resumeRotate();
-        game.setPaused(false);
+        Button backButton = new Button("Resume Game");
+        Button exitButton = new Button("Exit Game");
+        Button restartButton = new Button("Restart Game");
+        Button saveButton = new Button("Save Game");
+        Button muteButton = new Button("Mute Song");
+        Button changeSongButton = new Button("Change Song");
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                stage.setScene(scene);
+                game.setPaused(false);
+                resumeAllAnimations(game);
+            }
+        });
+        restartButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    stopAllAnimations(game);
+                    game.setGameOver(true);
+                    new GameMenu(new Game(totalBalls, game.getInitBalls())).start(RegisterMenu.stage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        exitButton.setOnAction(actionEvent -> {
+            try {
+                stopAllAnimations(game);
+                game.setGameOver(true);
+                new MainMenu().start(RegisterMenu.stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                // TODO implement save game
+            }
+        });
+        muteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                // TODO implement mute song
+            }
+        });
+        changeSongButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                //TODO implement change song
+            }
+        });
+        vBox.getChildren().add(backButton);
+        vBox.getChildren().add(restartButton);
+        vBox.getChildren().add(muteButton);
+        vBox.getChildren().add(changeSongButton);
+        vBox.getChildren().add(saveButton);
+        vBox.getChildren().add(exitButton);
+        vBox.setSpacing(15);
+
+
+        stage.setScene(newScene);
+        stage.show();
     }
 
     public void result(Game game, int score) {
@@ -139,6 +213,28 @@ public class GameController {
                 ball1.getPhase2Animation().getSizeChangeAnimation().stop();
             if (ball1.getPhase3Animation() != null)
                 ball1.getPhase3Animation().getFadeAnimation().stop();
+        }
+    }
+
+    private void pauseAllAnimations(Game game) {
+        for (Ball ball1 : game.getBallsOnTheCircle()) {
+            if (ball1.getRotationAnimation() != null)
+                ball1.getRotationAnimation().getTimeLine().pause();
+            if (ball1.getPhase2Animation() != null)
+                ball1.getPhase2Animation().getSizeChangeAnimation().pause();
+            if (ball1.getPhase3Animation() != null)
+                ball1.getPhase3Animation().getFadeAnimation().pause();
+        }
+    }
+
+    private void resumeAllAnimations(Game game) {
+        for (Ball ball1 : game.getBallsOnTheCircle()) {
+            if (ball1.getRotationAnimation() != null)
+                ball1.getRotationAnimation().getTimeLine().play();
+            if (ball1.getPhase2Animation() != null)
+                ball1.getPhase2Animation().getSizeChangeAnimation().play();
+            if (ball1.getPhase3Animation() != null)
+                ball1.getPhase3Animation().getFadeAnimation().play();
         }
     }
 }

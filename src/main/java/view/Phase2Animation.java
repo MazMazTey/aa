@@ -4,14 +4,14 @@ import controller.GameController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import model.Ball;
 import model.Game;
 
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Phase2Animation {
     private final Game game;
@@ -29,6 +29,8 @@ public class Phase2Animation {
         this.gamePane = gamePane;
         this.ball = ball;
         duration = 1000;
+        direction = game.getBallsOnTheCircle().get(0).
+                getRotationAnimation().getTimeLine().getRate();
     }
 
     public Timeline getSizeChangeAnimation() {
@@ -36,26 +38,26 @@ public class Phase2Animation {
     }
 
     public void randomReverse() {
-        direction = game.getBallsOnTheCircle().get(0).
-                getRotationAnimation().getTimeLine().getRate();
-        for (Ball ball1 : game.getBallsOnTheCircle()) {
-            if (ball1.getRotationAnimation() != null) {
-                ball1.getRotationAnimation().getTimeLine().setRate(-direction);
-            }
-        }
-        direction = -direction;
-        int delay = new Random().nextInt(4000 , 6000);
-        System.out.println(delay);
-        new Timer().schedule(new TimerTask() {
+        int delay = new Random().nextInt(4000, 6000);
+        Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, new EventHandler<ActionEvent>() {
             @Override
-            public void run() {
-                if (game.isGameOver()) {
-                    this.cancel();
-                    return;
+            public void handle(ActionEvent actionEvent) {
+                for (Ball ball1 : game.getBallsOnTheCircle()) {
+                    if (ball1.getRotationAnimation() != null) {
+                        ball1.getRotationAnimation().getTimeLine().setRate(-direction);
+                    }
                 }
+            }
+        }) , new KeyFrame(Duration.millis(delay)));
+        timeline.setCycleCount(1);
+        timeline.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                direction = - direction;
                 randomReverse();
             }
-        } , delay);
+        });
+        timeline.play();
     }
 
     public void changeBallSize() {

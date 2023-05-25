@@ -54,21 +54,13 @@ public class RotationAnimation{
         timeLine.setCycleCount(Timeline.INDEFINITE);
 
         ball.setRotationAnimation(this);
+        switch (game.getCurrentPlayer().getDifficulty()) {
+            case "Easy" -> ball.getRotationAnimation().timeLine.setRate(1);
+            case "Medium" -> ball.getRotationAnimation().timeLine.setRate(2.1);
+            case "Hard" -> ball.getRotationAnimation().timeLine.setRate(3.2);
+        }
         if (game.isSlowed()) ball.getRotationAnimation().timeLine.setRate(0.2);
         timeLine.play();
-    }
-
-    public void pauseRotate() {
-        for (Ball ball1 : game.getBallsOnTheCircle()) {
-            ball1.getRotationAnimation().timeLine.pause();
-        }
-        // TODO replace this with parallel transition
-    }
-
-    public void resumeRotate() {
-        for (Ball ball1 : game.getBallsOnTheCircle()) {
-            ball1.getRotationAnimation().timeLine.play();
-        }
     }
 
     public void slowRotate() {
@@ -80,9 +72,15 @@ public class RotationAnimation{
 
     public void speedRotate() {
         if (game.isGameOver()) return;
+        double speed = 1;
+        switch (game.getCurrentPlayer().getDifficulty()) {
+            case "Easy" -> speed = 1;
+            case "Medium" -> speed = 1.1;
+            case "Hard" -> speed = 1.2;
+        }
         for (Ball ball1 : game.getBallsOnTheCircle()) {
             if (ball1.getRotationAnimation() != null)
-                ball1.getRotationAnimation().timeLine.setRate(1);
+                ball1.getRotationAnimation().timeLine.setRate(speed);
         }
     }
 }

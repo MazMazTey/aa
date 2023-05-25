@@ -13,8 +13,8 @@ public class MainMenuController {
         controller = new controller.MainMenuController();
     }
 
-    public void startNewGame(MouseEvent mouseEvent) throws Exception {
-        controller.startNewGame();
+    public void startNewGame(int totalBalls , int initBalls) throws Exception {
+        controller.startNewGame(totalBalls , initBalls);
     }
 
     public void continueGame(MouseEvent mouseEvent) {
@@ -33,7 +33,7 @@ public class MainMenuController {
         controller.enterProfileMenu();
     }
 
-    public void leaderBoard(MouseEvent mouseEvent) {
+    public void leaderBoard(MouseEvent mouseEvent) throws Exception {
         controller.leaderBoard();
     }
 
