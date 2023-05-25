@@ -24,9 +24,10 @@ import java.util.TimerTask;
 
 public class GameController {
 
-    public void shootBall(Game game, Ball ball, Pane gamePane, ProgressBar progressBar, Text showScore) {
+    public void shootBall(Game game, Ball ball, Pane gamePane,
+                          ProgressBar progressBar, Text showScore) {
         ShootingAnimation animation = new ShootingAnimation(game, gamePane,
-                ball, game.getCenterCircle(), progressBar, this , showScore);
+                ball, game.getCenterCircle(), progressBar, this, showScore);
         animation.play();
     }
 
@@ -34,7 +35,8 @@ public class GameController {
         int totalBalls = game.getTotalBalls();
         pauseAllAnimations(game);
         game.setPaused(true);
-        BorderPane borderPane = FXMLLoader.load(GameController.class.getResource("/FXML/PauseMenu.fxml"));
+        BorderPane borderPane = FXMLLoader.load(GameController.class.
+                getResource("/FXML/PauseMenu.fxml"));
         Scene newScene = new Scene(borderPane);
         VBox vBox = new VBox();
         borderPane.setCenter(vBox);
@@ -43,8 +45,10 @@ public class GameController {
         label.setText("Pause Menu");
         label.setLabelFor(borderPane);
         vBox.getChildren().add(label);
-        vBox.getChildren().add(new Text("Shoot Key : " + game.getCurrentPlayer().getShootBallKey()));
-        vBox.getChildren().add(new Text("Freeze Key : " + game.getCurrentPlayer().getFreezeKey()));
+        vBox.getChildren().add(new Text("Shoot Key : " +
+                game.getCurrentPlayer().getShootBallKey()));
+        vBox.getChildren().add(new Text("Freeze Key : " +
+                game.getCurrentPlayer().getFreezeKey()));
 
         Button backButton = new Button("Resume Game");
         Button exitButton = new Button("Exit Game");
@@ -66,7 +70,8 @@ public class GameController {
                 try {
                     stopAllAnimations(game);
                     game.setGameOver(true);
-                    new GameMenu(new Game(totalBalls, game.getInitBalls())).start(RegisterMenu.stage);
+                    new GameMenu(new Game(totalBalls,
+                            game.getInitBalls())).start(RegisterMenu.stage);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -90,13 +95,26 @@ public class GameController {
         muteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                // TODO implement mute song
+                if (!game.isMusicMuted()) {
+                    GameMenu.getMediaPlayer().stop();
+                    muteButton.setText("Unmute Song");
+                    game.setMusicMuted(true);
+                    return;
+                }
+                GameMenu.getMediaPlayer().play();
+                muteButton.setText("Mute Song");
+                game.setMusicMuted(false);
             }
         });
         changeSongButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                //TODO implement change song
+                try {
+                    Stage newStage = new Stage();
+                    new SelectSong().start(newStage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         vBox.getChildren().add(backButton);
@@ -142,7 +160,6 @@ public class GameController {
             }
         }, game.getCurrentPlayer().getFreezeTime());
     }
-
     public boolean collide(Game game) {
         ArrayList<Ball> balls = game.getBallsOnTheCircle();
         for (int i = balls.size() - 1; i >= 0; i--) {
@@ -167,7 +184,8 @@ public class GameController {
                     ball1.setDefaultColor(Color.GREENYELLOW);
                     if (!game.isSlowed()) ball1.setFill(Color.GREENYELLOW);
                     if (ball1.getPhase2Animation() == null) {
-                        Phase2Animation phase2Animation = new Phase2Animation(game, gamePane, ball1, this);
+                        Phase2Animation phase2Animation = new Phase2Animation(
+                                game, gamePane, ball1, this);
                         phase2Animation.randomReverse();
                         phase2Animation.changeBallSize();
                     }
@@ -179,7 +197,8 @@ public class GameController {
                     ball1.setDefaultColor(Color.CRIMSON);
                     if (!game.isSlowed()) ball1.setFill(Color.CRIMSON);
                     if (ball1.getPhase2Animation() == null) {
-                        Phase2Animation phase2Animation = new Phase2Animation(game, gamePane, ball1, this);
+                        Phase2Animation phase2Animation = new Phase2Animation(
+                                game, gamePane, ball1, this);
                         phase2Animation.randomReverse();
                         phase2Animation.changeBallSize();
                     }
