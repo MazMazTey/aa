@@ -15,14 +15,19 @@ public class Game {
     private final HashMap<Ball , Line> ballsAndLines;
     private int ballsLeft;
     private final int totalBalls;
+    private final int initBalls;
 
     private RotationAnimation rotationAnimation;
     private boolean gameOver;
     private boolean isPaused;
     private boolean isSlowed;
+    private boolean gameReady;
     private int score;
 
-    public Game(int totalBalls) {
+    public Game(int totalBalls, int initBalls) {
+        this.initBalls = initBalls;
+        this.totalBalls = totalBalls;
+        ballsLeft = this.totalBalls;
         this.phase = 1;
         currentPlayer = AA.getLoggedInUser();
         centerCircle = new CenterCircle();
@@ -31,9 +36,8 @@ public class Game {
         isPaused = false;
         gameOver = false;
         isSlowed = false;
+        gameReady = false;
         score = 0;
-        this.totalBalls = totalBalls;
-        ballsLeft = this.totalBalls;
     }
 
     public User getCurrentPlayer() {
@@ -128,5 +132,17 @@ public class Game {
 
     public Line getLineByBall(Ball ball) {
         return ballsAndLines.get(ball);
+    }
+
+    public boolean isGameReady() {
+        return gameReady;
+    }
+
+    public void setGameReady(boolean gameReady) {
+        this.gameReady = gameReady;
+    }
+
+    public int getInitBalls() {
+        return initBalls;
     }
 }

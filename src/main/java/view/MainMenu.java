@@ -32,27 +32,30 @@ public class MainMenu extends Application {
         Button newGameButton = new Button("New Game");
         vBox.getChildren().add(1 , newGameButton);
 
-        Label label = new Label();
-        Slider slider = new Slider(8 , 14 , 10);
-        HBox hBox = new HBox(slider, label);
+        Label label1 = new Label();
+        Slider totalBalls = new Slider(8 , 14 , 10);
+        Label label2 = new Label();
+        Slider initBalls = new Slider(5 , 9 , 5);
+        VBox initVBox = new VBox(new Label("Initial Balls") , new HBox(initBalls , label2));
+        initVBox.setAlignment(Pos.CENTER);
+        initVBox.setSpacing(10);
+        VBox totalVBox = new VBox(new Label("Total Balls") , new HBox(totalBalls , label1));
+        totalVBox.setAlignment(Pos.CENTER);
+        totalVBox.setSpacing(10);
+        HBox hBox = new HBox(initVBox , totalVBox);
         hBox.setSpacing(10);
         hBox.setAlignment(Pos.CENTER);
         vBox.getChildren().add(2 , hBox);
 
 
-        slider.setMaxWidth(150);
-        slider.setBlockIncrement(1.0);
-        slider.setMajorTickUnit(1.0);
-        slider.setShowTickLabels(true);
-        slider.setShowTickMarks(true);
-        slider.setSnapToTicks(true);
-        slider.valueProperty().addListener((observable , oldValue , newValue) ->
-                label.setText((int) Math.floor(newValue.doubleValue()) + ""));
+        setUpSlider(label1, totalBalls);
+
+        setUpSlider(label2, initBalls);
         newGameButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 try {
-                    controller.startNewGame((int) Math.floor(slider.getValue()));
+                    controller.startNewGame((int) Math.floor(totalBalls.getValue()) , (int) Math.floor(initBalls.getValue()));
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -60,5 +63,16 @@ public class MainMenu extends Application {
         });
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void setUpSlider(Label label1, Slider totalBalls) {
+        totalBalls.setMaxWidth(150);
+        totalBalls.setBlockIncrement(1.0);
+        totalBalls.setMajorTickUnit(1.0);
+        totalBalls.setShowTickLabels(true);
+        totalBalls.setShowTickMarks(true);
+        totalBalls.setSnapToTicks(true);
+        totalBalls.valueProperty().addListener((observable , oldValue , newValue) ->
+                label1.setText((int) Math.floor(newValue.doubleValue()) + ""));
     }
 }

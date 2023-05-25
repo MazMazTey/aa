@@ -66,7 +66,7 @@ public class GameController {
                 try {
                     stopAllAnimations(game);
                     game.setGameOver(true);
-                    new GameMenu(new Game(totalBalls)).start(RegisterMenu.stage);
+                    new GameMenu(new Game(totalBalls, game.getInitBalls())).start(RegisterMenu.stage);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

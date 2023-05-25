@@ -1,6 +1,9 @@
 package view;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.AA;
 import model.Ball;
 import model.Game;
@@ -62,6 +66,7 @@ public class GameMenu extends Application {
                 }
             };
         timer.scheduleAtFixedRate(task , 0 , 10);
+        initializeMap(game.getInitBalls() , game , gamePane);
         game.getCenterCircle().setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
@@ -72,7 +77,7 @@ public class GameMenu extends Application {
                     controller.result(game, vBox , game.getScore() , gamePane);
                 }
                 if (keyName.equals(game.getCurrentPlayer().getShootBallKey())
-                        && !game.isGameOver() && !game.isPaused()) {
+                        && !game.isGameOver() && !game.isPaused() && game.isGameReady()) {
                     Ball ball = game.initializeBall(gamePane);
                     controller.shootBall(game , ball , gamePane , progressBar , showScore);
 
@@ -82,14 +87,16 @@ public class GameMenu extends Application {
                     numberOfBallsLeft.setText("Number of balls left : " + game.getBallsLeft());
                     showPhase.setText("Phase : " + game.getPhase());
                 }
-                else if (keyName.equals(game.getCurrentPlayer().getPauseKey()) && !game.isPaused()) {
+                else if (keyName.equals(game.getCurrentPlayer().getPauseKey()) &&
+                        !game.isPaused() && game.isGameReady()) {
                     try {
                         controller.pause(stage , scene, game);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 }
-                else if (keyName.equals(game.getCurrentPlayer().getFreezeKey()) && !game.isPaused() && progressBar.getProgress() >= 0.99) {
+                else if (keyName.equals(game.getCurrentPlayer().getFreezeKey()) &&
+                        !game.isPaused() && game.isGameReady() && progressBar.getProgress() >= 0.99) {
                     progressBar.setProgress(0);
                     controller.freeze(game);
                 }
@@ -97,5 +104,19 @@ public class GameMenu extends Application {
         });
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void initializeMap(int initBalls , Game game ,
+                               Pane gamePane) {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Ball ball = new Ball();
+                new StartGameAnimation(game , gamePane , ball , game.getCenterCircle()).play();
+            }
+        }) , new KeyFrame(Duration.millis(2000 / initBalls)));
+        timeline.setCycleCount(initBalls);
+        timeline.play();
+        game.setGameReady(true);
     }
 }
