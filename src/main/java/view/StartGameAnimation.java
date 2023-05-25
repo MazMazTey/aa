@@ -31,7 +31,7 @@ public class StartGameAnimation extends Transition {
     @Override
     protected void interpolate(double v) {
         double y = ball.getCenterY() - 20;
-        if (y <= 320) {
+        if (y <= 340) {
             this.stop();
             isStopped = true;
             game.addBallToCircle(ball);

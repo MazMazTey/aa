@@ -117,6 +117,11 @@ public class GameMenu extends Application {
         }) , new KeyFrame(Duration.millis(2000 / initBalls)));
         timeline.setCycleCount(initBalls);
         timeline.play();
-        game.setGameReady(true);
+        timeline.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                game.setGameReady(true);
+            }
+        });
     }
 }
