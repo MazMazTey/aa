@@ -13,7 +13,8 @@ public class Game {
     private final CenterCircle centerCircle;
     private final ArrayList<Ball> ballsOnTheCircle;
     private final HashMap<Ball , Line> ballsAndLines;
-    private int ballsLeft , totalBalls;
+    private int ballsLeft;
+    private final int totalBalls;
 
     private RotationAnimation rotationAnimation;
     private boolean gameOver;
@@ -21,7 +22,7 @@ public class Game {
     private boolean isSlowed;
     private int score;
 
-    public Game() {
+    public Game(int totalBalls) {
         this.phase = 1;
         currentPlayer = AA.getLoggedInUser();
         centerCircle = new CenterCircle();
@@ -31,8 +32,8 @@ public class Game {
         gameOver = false;
         isSlowed = false;
         score = 0;
-        totalBalls = 10;
-        ballsLeft = totalBalls;
+        this.totalBalls = totalBalls;
+        ballsLeft = this.totalBalls;
     }
 
     public User getCurrentPlayer() {
@@ -111,10 +112,6 @@ public class Game {
 
     public int getTotalBalls() {
         return totalBalls;
-    }
-
-    public void setTotalBalls(int totalBalls) {
-        this.totalBalls = totalBalls;
     }
 
     public boolean isSlowed() {

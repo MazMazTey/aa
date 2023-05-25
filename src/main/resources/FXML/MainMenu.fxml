@@ -13,7 +13,6 @@
     <center>
         <VBox alignment="CENTER" spacing="20">
             <Label text="Main Menu"/>
-            <Button text="New Game" onMouseClicked="#startNewGame"/>
             <Button text="Continue Previous Game" onMouseClicked="#continueGame"/>
             <Button text="Profile Menu" onMouseClicked="#enterProfileMenu"/>
             <Button text="Leader Board" onMouseClicked="#leaderBoard"/>

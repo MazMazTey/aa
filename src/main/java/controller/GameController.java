@@ -31,6 +31,7 @@ public class GameController {
     }
 
     public void pause(Stage stage , Scene scene , Game game) throws Exception {
+        int totalBalls = game.getTotalBalls();
         pauseAllAnimations(game);
         game.setPaused(true);
         BorderPane borderPane = FXMLLoader.load(GameController.class.getResource("/FXML/PauseMenu.fxml"));
@@ -42,11 +43,15 @@ public class GameController {
         label.setText("Pause Menu");
         label.setLabelFor(borderPane);
         vBox.getChildren().add(label);
+        vBox.getChildren().add(new Text("Shoot Key : " + game.getCurrentPlayer().getShootBallKey()));
+        vBox.getChildren().add(new Text("Freeze Key : " + game.getCurrentPlayer().getFreezeKey()));
 
         Button backButton = new Button("Resume Game");
         Button exitButton = new Button("Exit Game");
         Button restartButton = new Button("Restart Game");
         Button saveButton = new Button("Save Game");
+        Button muteButton = new Button("Mute Song");
+        Button changeSongButton = new Button("Change Song");
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -61,7 +66,7 @@ public class GameController {
                 try {
                     stopAllAnimations(game);
                     game.setGameOver(true);
-                    new GameMenu(new Game()).start(RegisterMenu.stage);
+                    new GameMenu(new Game(totalBalls)).start(RegisterMenu.stage);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -82,8 +87,22 @@ public class GameController {
                 // TODO implement save game
             }
         });
+        muteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                // TODO implement mute song
+            }
+        });
+        changeSongButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                //TODO implement change song
+            }
+        });
         vBox.getChildren().add(backButton);
         vBox.getChildren().add(restartButton);
+        vBox.getChildren().add(muteButton);
+        vBox.getChildren().add(changeSongButton);
         vBox.getChildren().add(saveButton);
         vBox.getChildren().add(exitButton);
         vBox.setSpacing(15);

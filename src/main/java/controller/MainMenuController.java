@@ -7,8 +7,8 @@ import view.*;
 import java.io.IOException;
 
 public class MainMenuController {
-    public void startNewGame() throws Exception {
-        new GameMenu(new Game()).start(RegisterMenu.stage);
+    public void startNewGame(int totalBalls) throws Exception {
+        new GameMenu(new Game(totalBalls)).start(RegisterMenu.stage);
     }
 
     public void continueGame() {
