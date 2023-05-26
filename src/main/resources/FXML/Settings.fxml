@@ -9,13 +9,19 @@
             fx:controller="view.Settings">
     <center>
         <VBox alignment="CENTER" spacing="15">
-            <Label text="Settings" />
+            <Label text="Settings"/>
+            <Label text="Difficulty" />
             <RadioButton text="Easy" toggleGroup="$difficulty">
-            <toggleGroup>
-               <ToggleGroup fx:id="difficulty" />
-            </toggleGroup></RadioButton>
+                <toggleGroup>
+                    <ToggleGroup fx:id="difficulty" />
+                </toggleGroup>
+            </RadioButton>
             <RadioButton text="Medium" toggleGroup="$difficulty" />
             <RadioButton text="Hard" toggleGroup="$difficulty" />
+            <Label text="Change Key Bindings"/>
+            <HBox alignment="CENTER" spacing="20">
+
+            </HBox>
             <Button mnemonicParsing="false" onMouseClicked="#muteSong" text="Mute Song" fx:id="muteButton"/>
             <Button mnemonicParsing="false" onMouseClicked="#back" text="Back" />
         </VBox>

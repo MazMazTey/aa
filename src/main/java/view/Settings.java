@@ -1,21 +1,28 @@
 package view;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.AA;
 
 import java.net.URL;
 
 public class Settings extends Application {
-    public Button muteButton;
+    @FXML
+    private Button muteButton;
     @FXML
     private ToggleGroup difficulty;
     @Override
@@ -23,9 +30,45 @@ public class Settings extends Application {
         URL url = Settings.class.getResource("/FXML/Settings.fxml");
         BorderPane borderPane = FXMLLoader.load(url);
         Scene scene = new Scene(borderPane);
+        VBox vBox = (VBox) borderPane.getChildren().get(0);
+        HBox hBox = (HBox) vBox.getChildren().get(6);
+        Button shootKey = new Button("Shoot");
+        Button freezeKey = new Button("Freeze");
+        Button pauseKey = new Button("Pause");
+        setKeyBinding(shootKey, borderPane);
+        setKeyBinding(freezeKey, borderPane);
+        setKeyBinding(pauseKey, borderPane);
+
+        hBox.getChildren().add(0 , shootKey);
+        hBox.getChildren().add(1 , freezeKey);
+        hBox.getChildren().add(2 , pauseKey);
         stage.setScene(scene);
         stage.show();
-        //TODO when opening settings it should show current difficulty
+    }
+
+    private void setKeyBinding(Button binding , BorderPane root) {
+        binding.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                binding.requestFocus();
+                binding.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent keyEvent) {
+                        String keyName = keyEvent.getCode().getName();
+                        switch (binding.getText()) {
+                            case "Shoot" -> AA.getLoggedInUser().setShootBallKey(keyName);
+                            case "Freeze" -> AA.getLoggedInUser().setFreezeKey(keyName);
+                            case "Pause" -> AA.getLoggedInUser().setPauseKey(keyName);
+                        }
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Success");
+                        alert.setHeaderText("Key Binding Change");
+                        alert.setContentText("Key Binding Changed To " + keyName);
+                        alert.showAndWait();
+                    }
+                });
+            }
+        });
     }
 
     @FXML

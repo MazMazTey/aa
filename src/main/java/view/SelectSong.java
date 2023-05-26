@@ -37,7 +37,7 @@ public class SelectSong extends Application {
     private void setSong(RadioButton radioButton1, RadioButton radioButton2
             , RadioButton radioButton3) {
         radioButton1.selectedProperty().addListener(
-                (observable , oldValue , newValue) -> {
+                (observable, oldValue, newValue) -> {
                     if (newValue) {
                         radioButton2.setSelected(false);
                         radioButton3.setSelected(false);
