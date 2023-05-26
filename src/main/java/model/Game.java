@@ -22,6 +22,8 @@ public class Game {
     private boolean isPaused;
     private boolean isSlowed;
     private boolean gameReady;
+    private boolean rotationReversed;
+    private double speed;
     private int score;
 
     public Game(int totalBalls, int initBalls) {
@@ -37,6 +39,8 @@ public class Game {
         gameOver = false;
         isSlowed = false;
         gameReady = false;
+        rotationReversed = false;
+        speed = 1;
         score = 0;
     }
 
@@ -144,5 +148,25 @@ public class Game {
 
     public int getInitBalls() {
         return initBalls;
+    }
+
+    public boolean isRotationReversed() {
+        return rotationReversed;
+    }
+
+    public void setRotationReversed(boolean rotationReversed) {
+        this.rotationReversed = rotationReversed;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public void toggleRotationReversion() {
+        rotationReversed = !rotationReversed;
     }
 }

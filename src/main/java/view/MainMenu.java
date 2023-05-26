@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.AA;
 
 import java.net.URL;
 
@@ -25,6 +26,8 @@ public class MainMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        AA.getMediaPlayer().setAutoPlay(true);
+
         URL url = MainMenu.class.getResource("/FXML/MainMenu.fxml");
         BorderPane borderPane = FXMLLoader.load(url);
         Scene scene = new Scene(borderPane);
