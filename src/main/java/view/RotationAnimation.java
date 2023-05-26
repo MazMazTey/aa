@@ -11,24 +11,24 @@ import model.Ball;
 import model.CenterCircle;
 import model.Game;
 
-public class RotationAnimation{
+public class RotationAnimation {
     private final Game game;
     private final CenterCircle centerCircle;
     private final Ball ball;
     private final Line needle;
     private Timeline timeLine;
     private Rotate rotate;
-    private double periodicity;
+    private final double periodicity;
 
 
-    public RotationAnimation(Game game , Pane gamePane, CenterCircle centerCircle , Ball ball) {
+    public RotationAnimation(Game game, Pane gamePane, CenterCircle centerCircle, Ball ball) {
         this.centerCircle = centerCircle;
         this.ball = ball;
         this.game = game;
-        this.needle = new Line(ball.getCenterX() , ball.getCenterY() , centerCircle.getCenterX() , centerCircle.getCenterY());
+        this.needle = new Line(ball.getCenterX(), ball.getCenterY(), centerCircle.getCenterX(), centerCircle.getCenterY());
         gamePane.getChildren().add(needle);
         game.setRotationAnimation(this);
-        game.addLine(ball , needle);
+        game.addLine(ball, needle);
         this.periodicity = 2000;
     }
 
@@ -53,20 +53,22 @@ public class RotationAnimation{
         );
         timeLine.setCycleCount(Timeline.INDEFINITE);
 
-        ball.setRotationAnimation(this);
         switch (game.getCurrentPlayer().getDifficulty()) {
-            case "Easy" -> ball.getRotationAnimation().timeLine.setRate(1);
-            case "Medium" -> ball.getRotationAnimation().timeLine.setRate(2.1);
-            case "Hard" -> ball.getRotationAnimation().timeLine.setRate(3.2);
+            case "Easy" -> game.setSpeed(1);
+            case "Medium" -> game.setSpeed(1.1);
+            case "Hard" -> game.setSpeed(1.2);
         }
-        if (game.isSlowed()) ball.getRotationAnimation().timeLine.setRate(0.2);
+        if (game.isSlowed()) game.setSpeed(0.2);
+        ball.setRotationAnimation(this);
+        ball.getRotationAnimation().timeLine.setRate(game.getBallsOnTheCircle().
+                get(0).getRotationAnimation().getTimeLine().getRate());
         timeLine.play();
     }
 
     public void slowRotate() {
         for (Ball ball1 : game.getBallsOnTheCircle()) {
             if (ball1.getRotationAnimation() != null)
-                ball1.getRotationAnimation().timeLine.setRate(0.2);
+                ball1.getRotationAnimation().timeLine.setRate(game.getSpeed());
         }
     }
 
@@ -78,6 +80,7 @@ public class RotationAnimation{
             case "Medium" -> speed = 1.1;
             case "Hard" -> speed = 1.2;
         }
+        game.setSpeed(speed);
         for (Ball ball1 : game.getBallsOnTheCircle()) {
             if (ball1.getRotationAnimation() != null)
                 ball1.getRotationAnimation().timeLine.setRate(speed);

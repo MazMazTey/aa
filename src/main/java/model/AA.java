@@ -19,7 +19,7 @@ public class AA {
                     GameMenu.class.getResource("/Media/music2.mp3").toExternalForm()),
             new Media(
                     GameMenu.class.getResource("/Media/music3.mp3").toExternalForm())};
-    private static Media currentSong = allSongs[2];
+    private static Media currentSong = allSongs[0];
     private static MediaPlayer mediaPlayer = new MediaPlayer(currentSong);
     private static boolean musicMuted = false;
 

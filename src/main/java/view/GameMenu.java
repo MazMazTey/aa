@@ -29,6 +29,7 @@ public class GameMenu extends Application {
     private static MediaPlayer mediaPlayer = new MediaPlayer(media);
     private final Game game;
     private final GameMenuController controller;
+
     public GameMenu(Game game) {
         this.game = game;
         this.controller = new GameMenuController();
@@ -50,7 +51,7 @@ public class GameMenu extends Application {
         Text numberOfBallsLeft = new Text("Number of balls left : " + game.getBallsLeft());
         ProgressBar progressBar = new ProgressBar(1);
         Text showScore = new Text("Score : " + game.getScore());
-        controller.createHbox(hBox , freezeCoolDown , numberOfBallsLeft , progressBar , showScore);
+        controller.createHbox(hBox, freezeCoolDown, numberOfBallsLeft, progressBar, showScore);
         gamePane.getChildren().add(hBox);
         Text showPhase = new Text("Phase : " + game.getPhase());
         showPhase.setLayoutX(540);
@@ -58,21 +59,21 @@ public class GameMenu extends Application {
         gamePane.getChildren().add(showPhase);
         Timer timer = new Timer(); // check collision during game
         TimerTask task = new TimerTask() {
-                @Override
-                public void run() {
-                    if (game.isGameOver()) {
-                        timer.cancel();
-                        return;
-                    }
-                    if (controller.collide(game)) {
-                        controller.lose(game, gamePane);
-                        System.out.println("You Lost!");
-                        timer.cancel();
-                    }
+            @Override
+            public void run() {
+                if (game.isGameOver()) {
+                    timer.cancel();
+                    return;
                 }
-            };
-        timer.scheduleAtFixedRate(task , 0 , 10);
-        initializeMap(game.getInitBalls() , game , gamePane);
+                if (controller.collide(game)) {
+                    controller.lose(game, gamePane);
+                    System.out.println("You Lost!");
+                    timer.cancel();
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(task, 0, 10);
+        initializeMap(game.getInitBalls(), game, gamePane);
         game.getCenterCircle().setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
@@ -80,7 +81,7 @@ public class GameMenu extends Application {
                 if (game.isGameOver()) {
                     System.out.println("Game Over!");
                     VBox vBox = new VBox();
-                    controller.result(game, vBox , game.getScore() , gamePane);
+                    controller.result(game, vBox, game.getScore(), gamePane);
                 }
                 if (keyName.equals(game.getCurrentPlayer().getShootBallKey())
                         && !game.isGameOver() && !game.isPaused() && game.isGameReady()) {
@@ -94,23 +95,21 @@ public class GameMenu extends Application {
                             mediaPlayer.pause();
                         }
                     });
-                    controller.shootBall(game , ball , gamePane , progressBar , showScore);
+                    controller.shootBall(game, ball, gamePane, progressBar, showScore);
 
                     int shotBalls = game.getTotalBalls() - game.getBallsLeft(); // change phase
-                    controller.checkPhaseChange(shotBalls , game);
+                    controller.checkPhaseChange(shotBalls, game);
 
                     numberOfBallsLeft.setText("Number of balls left : " + game.getBallsLeft());
                     showPhase.setText("Phase : " + game.getPhase());
-                }
-                else if (keyName.equals(game.getCurrentPlayer().getPauseKey()) &&
+                } else if (keyName.equals(game.getCurrentPlayer().getPauseKey()) &&
                         !game.isPaused() && game.isGameReady()) {
                     try {
-                        controller.pause(stage , scene, game);
+                        controller.pause(stage, scene, game);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-                }
-                else if (keyName.equals(game.getCurrentPlayer().getFreezeKey()) &&
+                } else if (keyName.equals(game.getCurrentPlayer().getFreezeKey()) &&
                         !game.isPaused() && game.isGameReady() && progressBar.getProgress() >= 0.99) {
                     progressBar.setProgress(0);
                     controller.freeze(game);
@@ -121,15 +120,15 @@ public class GameMenu extends Application {
         stage.show();
     }
 
-    private void initializeMap(int initBalls , Game game ,
+    private void initializeMap(int initBalls, Game game,
                                Pane gamePane) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Ball ball = new Ball();
-                new StartGameAnimation(game , gamePane , ball , game.getCenterCircle()).play();
+                new StartGameAnimation(game, gamePane, ball, game.getCenterCircle()).play();
             }
-        }) , new KeyFrame(Duration.millis(2000 / initBalls)));
+        }), new KeyFrame(Duration.millis(2000 / initBalls)));
         timeline.setCycleCount(initBalls);
         timeline.play();
         timeline.setOnFinished(new EventHandler<ActionEvent>() {
@@ -139,5 +138,4 @@ public class GameMenu extends Application {
             }
         });
     }
-
 }
