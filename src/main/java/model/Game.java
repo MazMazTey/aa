@@ -22,7 +22,6 @@ public class Game {
     private boolean isPaused;
     private boolean isSlowed;
     private boolean gameReady;
-    private boolean musicMuted;
     private int score;
 
     public Game(int totalBalls, int initBalls) {
@@ -38,7 +37,6 @@ public class Game {
         gameOver = false;
         isSlowed = false;
         gameReady = false;
-        musicMuted = false;
         score = 0;
     }
 
@@ -148,11 +146,4 @@ public class Game {
         return initBalls;
     }
 
-    public boolean isMusicMuted() {
-        return musicMuted;
-    }
-
-    public void setMusicMuted(boolean musicMuted) {
-        this.musicMuted = musicMuted;
-    }
 }

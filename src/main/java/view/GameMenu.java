@@ -12,8 +12,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -27,8 +25,6 @@ import java.util.TimerTask;
 public class GameMenu extends Application {
     private final Game game;
     private final GameMenuController controller;
-    private static Media media = AA.getAllSongs()[2];
-    private static MediaPlayer mediaPlayer = new MediaPlayer(media);
     public GameMenu(Game game) {
         this.game = game;
         this.controller = new GameMenuController();
@@ -36,7 +32,6 @@ public class GameMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 
         if (!AA.getLoggedInUser().isGuest()) game.setCurrentPlayer(AA.getLoggedInUser());
         Pane gamePane = FXMLLoader.load(GameMenu.class.getResource("/FXML/GameMenu.fxml"));
@@ -79,7 +74,6 @@ public class GameMenu extends Application {
                 String keyName = keyEvent.getCode().getName();
                 if (game.isGameOver()) {
                     System.out.println("Game Over!");
-                    mediaPlayer.stop();
                     VBox vBox = new VBox();
                     controller.result(game, vBox , game.getScore() , gamePane);
                 }
@@ -128,20 +122,8 @@ public class GameMenu extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 game.setGameReady(true);
-                mediaPlayer.setAutoPlay(true);
             }
         });
     }
 
-    public static MediaPlayer getMediaPlayer() {
-        return mediaPlayer;
-    }
-
-    public static void setMedia(Media media) {
-        GameMenu.media = media;
-    }
-
-    public static void setMediaPlayer(MediaPlayer mediaPlayer) {
-        GameMenu.mediaPlayer = mediaPlayer;
-    }
 }

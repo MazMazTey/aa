@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
@@ -14,6 +15,7 @@ import model.AA;
 import java.net.URL;
 
 public class Settings extends Application {
+    public Button muteButton;
     @FXML
     private ToggleGroup difficulty;
     @Override
@@ -49,5 +51,22 @@ public class Settings extends Application {
 
     public void back(MouseEvent mouseEvent) throws Exception {
         new MainMenu().start(RegisterMenu.stage);
+    }
+
+    public void muteSong(MouseEvent mouseEvent) {
+        muteSong(muteButton);
+    }
+
+    public static void muteSong(Button muteButton) {
+        if (!AA.isMusicMuted()) {
+            AA.getMediaPlayer().stop();
+            muteButton.setText("Unmute Song");
+            AA.setMusicMuted(true);
+            return;
+        }
+        AA.getMediaPlayer().setAutoPlay(true);
+        AA.getMediaPlayer().play();
+        muteButton.setText("Mute Song");
+        AA.setMusicMuted(false);
     }
 }

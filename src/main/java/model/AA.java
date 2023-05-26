@@ -1,6 +1,7 @@
 package model;
 
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import view.GameMenu;
 
 import java.util.ArrayList;
@@ -18,6 +19,13 @@ public class AA {
                     GameMenu.class.getResource("/Media/music2.mp3").toExternalForm()),
             new Media(
                     GameMenu.class.getResource("/Media/music3.mp3").toExternalForm())};
+    private static Media currentSong = allSongs[2];
+    private static MediaPlayer mediaPlayer = new MediaPlayer(currentSong);
+    private static boolean musicMuted = false;
+
+    static {
+        mediaPlayer.setCycleCount(-1);
+    }
 
     public static User getLoggedInUser() {
         return loggedInUser;
@@ -61,5 +69,29 @@ public class AA {
 
     public static Media[] getAllSongs() {
         return allSongs;
+    }
+
+    public static Media getCurrentSong() {
+        return currentSong;
+    }
+
+    public static void setCurrentSong(Media currentSong) {
+        AA.currentSong = currentSong;
+    }
+
+    public static MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
+
+    public static void setMediaPlayer(MediaPlayer mediaPlayer) {
+        AA.mediaPlayer = mediaPlayer;
+    }
+
+    public static boolean isMusicMuted() {
+        return musicMuted;
+    }
+
+    public static void setMusicMuted(boolean musicMuted) {
+        AA.musicMuted = musicMuted;
     }
 }

@@ -42,31 +42,31 @@ public class SelectSong extends Application {
                         radioButton2.setSelected(false);
                         radioButton3.setSelected(false);
                         String songName = radioButton1.getText();
-                        GameMenu.getMediaPlayer().stop();
+                        AA.getMediaPlayer().stop();
                         switch (songName) {
                             case "Song 1" -> {
                                 Media media = AA.getAllSongs()[0];
-                                GameMenu.setMedia(media);
-                                GameMenu.setMediaPlayer(new MediaPlayer(media));
-                                GameMenu.getMediaPlayer().setAutoPlay(true);
-                                GameMenu.getMediaPlayer().setCycleCount(-1);
-                                GameMenu.getMediaPlayer().play();
+                                AA.setCurrentSong(media);
+                                AA.setMediaPlayer(new MediaPlayer(media));
+                                AA.getMediaPlayer().setAutoPlay(true);
+                                AA.getMediaPlayer().setCycleCount(-1);
+                                AA.getMediaPlayer().play();
                             }
                             case "Song 2" -> {
                                 Media media = AA.getAllSongs()[1];
-                                GameMenu.setMedia(media);
-                                GameMenu.setMediaPlayer(new MediaPlayer(media));
-                                GameMenu.getMediaPlayer().setAutoPlay(true);
-                                GameMenu.getMediaPlayer().setCycleCount(-1);
-                                GameMenu.getMediaPlayer().play();
+                                AA.setCurrentSong(media);
+                                AA.setMediaPlayer(new MediaPlayer(media));
+                                AA.getMediaPlayer().setAutoPlay(true);
+                                AA.getMediaPlayer().setCycleCount(-1);
+                                AA.getMediaPlayer().play();
                             }
                             case "Song 3" -> {
                                 Media media = AA.getAllSongs()[2];
-                                GameMenu.setMedia(media);
-                                GameMenu.setMediaPlayer(new MediaPlayer(media));
-                                GameMenu.getMediaPlayer().setAutoPlay(true);
-                                GameMenu.getMediaPlayer().setCycleCount(-1);
-                                GameMenu.getMediaPlayer().play();
+                                AA.setCurrentSong(media);
+                                AA.setMediaPlayer(new MediaPlayer(media));
+                                AA.getMediaPlayer().setAutoPlay(true);
+                                AA.getMediaPlayer().setCycleCount(-1);
+                                AA.getMediaPlayer().play();
                             }
                         }
                     }

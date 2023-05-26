@@ -96,15 +96,7 @@ public class GameController {
         muteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                if (!game.isMusicMuted()) {
-                    GameMenu.getMediaPlayer().stop();
-                    muteButton.setText("Unmute Song");
-                    game.setMusicMuted(true);
-                    return;
-                }
-                GameMenu.getMediaPlayer().play();
-                muteButton.setText("Mute Song");
-                game.setMusicMuted(false);
+                Settings.muteSong(muteButton);
             }
         });
         changeSongButton.setOnAction(new EventHandler<ActionEvent>() {

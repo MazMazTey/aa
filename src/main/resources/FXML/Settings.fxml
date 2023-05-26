@@ -16,6 +16,7 @@
             </toggleGroup></RadioButton>
             <RadioButton text="Medium" toggleGroup="$difficulty" />
             <RadioButton text="Hard" toggleGroup="$difficulty" />
+            <Button mnemonicParsing="false" onMouseClicked="#muteSong" text="Mute Song" fx:id="muteButton"/>
             <Button mnemonicParsing="false" onMouseClicked="#back" text="Back" />
         </VBox>
     </center>
