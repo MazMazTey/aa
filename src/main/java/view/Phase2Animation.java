@@ -42,9 +42,18 @@ public class Phase2Animation {
         Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                for (Ball ball1 : game.getBallsOnTheCircle()) {
-                    if (ball1.getRotationAnimation() != null) {
-                        ball1.getRotationAnimation().getTimeLine().setRate(-direction);
+                if (!game.isSlowed()) {
+                    for (Ball ball1 : game.getBallsOnTheCircle()) {
+                        if (ball1.getRotationAnimation() != null) {
+                            ball1.getRotationAnimation().getTimeLine().setRate(-direction);
+                        }
+                    }
+                }
+                else {
+                    for (Ball ball1 : game.getBallsOnTheCircle()) {
+                        if (ball1.getRotationAnimation() != null) {
+                            ball1.getRotationAnimation().getTimeLine().setRate(-0.2 * direction);
+                        }
                     }
                 }
             }

@@ -79,6 +79,7 @@ public class GameMenu extends Application {
                 String keyName = keyEvent.getCode().getName();
                 if (game.isGameOver()) {
                     System.out.println("Game Over!");
+                    mediaPlayer.stop();
                     VBox vBox = new VBox();
                     controller.result(game, vBox , game.getScore() , gamePane);
                 }

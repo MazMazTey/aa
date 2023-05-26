@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.AA;
 import model.Ball;
 import model.Game;
 import view.*;
@@ -132,6 +133,7 @@ public class GameController {
 
     public void result(Game game, int score) {
         game.getCurrentPlayer().addToHighScore(score);
+        AA.leaderBoard();
     }
 
     public void checkPhaseChange(int shotBalls, Game game) {

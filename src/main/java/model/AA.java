@@ -4,7 +4,7 @@ import javafx.scene.media.Media;
 import view.GameMenu;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class AA {
@@ -55,7 +55,7 @@ public class AA {
     }
 
     public static ArrayList<User> leaderBoard() {
-        Arrays.sort(allUsersList.toArray());
+        Collections.sort(allUsersList);
         return allUsersList;
     }
 
