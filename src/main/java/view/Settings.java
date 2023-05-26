@@ -59,13 +59,13 @@ public class Settings extends Application {
 
     public static void muteSong(Button muteButton) {
         if (!AA.isMusicMuted()) {
-            AA.getMediaPlayer().stop();
+            AA.getMediaPlayer().setMute(true);
             muteButton.setText("Unmute Song");
             AA.setMusicMuted(true);
             return;
         }
         AA.getMediaPlayer().setAutoPlay(true);
-        AA.getMediaPlayer().play();
+        AA.getMediaPlayer().setMute(false);
         muteButton.setText("Mute Song");
         AA.setMusicMuted(false);
     }

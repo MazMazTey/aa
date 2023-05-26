@@ -12,6 +12,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -23,11 +25,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class GameMenu extends Application {
+    private static Media media = new Media(GameMenu.class.getResource("/Media/shoot ball.mp3").toExternalForm());
+    private static MediaPlayer mediaPlayer = new MediaPlayer(media);
     private final Game game;
     private final GameMenuController controller;
     public GameMenu(Game game) {
         this.game = game;
         this.controller = new GameMenuController();
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
     }
 
     @Override
@@ -80,6 +85,15 @@ public class GameMenu extends Application {
                 if (keyName.equals(game.getCurrentPlayer().getShootBallKey())
                         && !game.isGameOver() && !game.isPaused() && game.isGameReady()) {
                     Ball ball = game.initializeBall(gamePane);
+
+                    mediaPlayer.play();
+                    mediaPlayer.setOnEndOfMedia(new Runnable() {
+                        @Override
+                        public void run() {
+                            mediaPlayer.seek(Duration.ZERO);
+                            mediaPlayer.pause();
+                        }
+                    });
                     controller.shootBall(game , ball , gamePane , progressBar , showScore);
 
                     int shotBalls = game.getTotalBalls() - game.getBallsLeft(); // change phase
