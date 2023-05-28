@@ -82,7 +82,7 @@ public class Game {
         this.gameOver = gameOver;
     }
 
-    public Ball initializeBall(Pane gamePane) {
+    public void initializeBall(Pane gamePane) {
         ballsLeft--;
         Ball ball = new Ball();
         if (ballsLeft <= 0) {
@@ -92,7 +92,6 @@ public class Game {
             gamePane.getChildren().add(ball);
             allBalls.add(ball);
         }
-        return ball;
     }
 
     public RotationAnimation getRotationAnimation() {

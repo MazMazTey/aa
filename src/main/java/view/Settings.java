@@ -35,13 +35,19 @@ public class Settings extends Application {
         Button shootKey = new Button("Shoot");
         Button freezeKey = new Button("Freeze");
         Button pauseKey = new Button("Pause");
+        Button moveLeftKey = new Button("Move Left");
+        Button moveRightKey = new Button("Move Right");
         setKeyBinding(shootKey, borderPane);
         setKeyBinding(freezeKey, borderPane);
         setKeyBinding(pauseKey, borderPane);
+        setKeyBinding(moveLeftKey, borderPane);
+        setKeyBinding(moveRightKey, borderPane);
 
         hBox.getChildren().add(0 , shootKey);
         hBox.getChildren().add(1 , freezeKey);
         hBox.getChildren().add(2 , pauseKey);
+        hBox.getChildren().add(3 , moveLeftKey);
+        hBox.getChildren().add(4 , moveRightKey);
         stage.setScene(scene);
         stage.show();
     }
@@ -59,6 +65,8 @@ public class Settings extends Application {
                             case "Shoot" -> AA.getLoggedInUser().setShootBallKey(keyName);
                             case "Freeze" -> AA.getLoggedInUser().setFreezeKey(keyName);
                             case "Pause" -> AA.getLoggedInUser().setPauseKey(keyName);
+                            case "Move Left" -> AA.getLoggedInUser().setMoveLeftKey(keyName);
+                            case "Move Right" -> AA.getLoggedInUser().setMoveRightKey(keyName);
                         }
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Success");

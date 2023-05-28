@@ -57,6 +57,10 @@ public class GameController {
                 game.getCurrentPlayer().getFreezeKey()));
         vBox.getChildren().add(new Text("Pause Key : " +
                 game.getCurrentPlayer().getPauseKey()));
+        vBox.getChildren().add(new Text("Move Left Key : " +
+                game.getCurrentPlayer().getMoveLeftKey()));
+        vBox.getChildren().add(new Text("Move Right Key : " +
+                game.getCurrentPlayer().getMoveRightKey()));
 
         Button backButton = new Button("Resume Game");
         Button exitButton = new Button("Exit Game");
