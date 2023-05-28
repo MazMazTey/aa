@@ -41,9 +41,11 @@ public class GameMenu extends Application {
         Scene scene = new Scene(gamePane);
         gamePane.getChildren().add(game.getCenterCircle());
         gamePane.getChildren().get(0).requestFocus();
-        game.initializeBall(gamePane, "down");
-        if (game.is2Player())
-            game.initializeBall(gamePane , "up");
+        game.initializeBall(gamePane);
+        if (game.is2Player()) {
+            game.initializeBall(gamePane, "up");
+            game.initializeBall(gamePane, "down");
+        }
 
         HBox hBox = new HBox();
         Text freezeCoolDown = new Text();
@@ -104,7 +106,7 @@ public class GameMenu extends Application {
                 else {
                     controller.shootBall(game, game.getAllBalls().get(game.getAllBalls().size() - 1),
                             gamePane, progressBar, showScore);
-                    game.initializeBall(gamePane, "down");
+                    game.initializeBall(gamePane);
                 }
 
                 int shotBalls = game.getTotalBalls() - game.getBallsLeft(); // change phase

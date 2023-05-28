@@ -100,6 +100,18 @@ public class Game {
         this.gameOver = gameOver;
     }
 
+    public void initializeBall(Pane gamePane) {
+        ballsLeft--;
+        Ball ball = new Ball(600);
+        if (ballsLeft <= 0) {
+            gameOver = true;
+        }
+        else {
+            gamePane.getChildren().add(ball);
+            allBalls.add(ball);
+        }
+    }
+
     public void initializeBall(Pane gamePane , String place) {
         ballsLeft--;
         Ball ball = null;
@@ -120,7 +132,7 @@ public class Game {
         }
         else {
             gamePane.getChildren().add(ball);
-            allBalls.add(ball);
+//            allBalls.add(ball);
         }
     }
 
