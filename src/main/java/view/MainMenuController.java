@@ -13,8 +13,8 @@ public class MainMenuController {
         controller = new controller.MainMenuController();
     }
 
-    public void startNewGame(int totalBalls , int initBalls) throws Exception {
-        controller.startNewGame(totalBalls , initBalls);
+    public void startNewGame(boolean is2Player , int totalBalls , int initBalls) throws Exception {
+        controller.startNewGame(is2Player , totalBalls , initBalls);
     }
 
     public void continueGame(MouseEvent mouseEvent) {

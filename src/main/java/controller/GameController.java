@@ -82,7 +82,7 @@ public class GameController {
                 try {
                     stopAllAnimations(game);
                     game.setGameOver(true);
-                    new GameMenu(new Game(totalBalls,
+                    new GameMenu(new Game(game.isIs2Player(), totalBalls,
                             game.getInitBalls())).start(RegisterMenu.stage);
                 } catch (Exception e) {
                     throw new RuntimeException(e);

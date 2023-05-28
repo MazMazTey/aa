@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Game {
+    private final boolean is2Player;
     private User currentPlayer;
     private int phase;
     private final CenterCircle centerCircle;
@@ -27,13 +28,15 @@ public class Game {
     private double speed;
     private int score;
 
-    public Game(int totalBalls, int initBalls) {
+    public Game(boolean is2Player, int totalBalls, int initBalls) {
+        this.is2Player = is2Player;
         this.initBalls = initBalls;
         this.totalBalls = totalBalls;
         ballsLeft = this.totalBalls + 1;
         this.phase = 1;
         currentPlayer = AA.getLoggedInUser();
-        centerCircle = new CenterCircle();
+        if (is2Player) centerCircle = new CenterCircle(300);
+        else centerCircle = new CenterCircle(200);
         allBalls = new ArrayList<>();
         ballsOnTheCircle = new ArrayList<>();
         ballsAndLines = new HashMap<>();
@@ -44,6 +47,10 @@ public class Game {
         rotationReversed = false;
         speed = 1;
         score = 0;
+    }
+
+    public boolean isIs2Player() {
+        return is2Player;
     }
 
     public User getCurrentPlayer() {

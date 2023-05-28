@@ -25,8 +25,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class GameMenu extends Application {
-    private static Media media = new Media(GameMenu.class.getResource("/Media/shoot ball.mp3").toExternalForm());
-    private static MediaPlayer mediaPlayer = new MediaPlayer(media);
+    private static final Media media = new Media(GameMenu.class.getResource("/Media/shoot ball.mp3").toExternalForm());
+    private static final MediaPlayer mediaPlayer = new MediaPlayer(media);
     private final Game game;
     private final GameMenuController controller;
 

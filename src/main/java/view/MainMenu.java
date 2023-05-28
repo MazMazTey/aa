@@ -33,7 +33,13 @@ public class MainMenu extends Application {
         Scene scene = new Scene(borderPane);
         VBox vBox = (VBox) borderPane.getChildren().get(0);
         Button newGameButton = new Button("New Game");
-        vBox.getChildren().add(1 , newGameButton);
+        Button twoPlayerButton = new Button("2 Player Game");
+
+        HBox newGameButtons = new HBox(newGameButton , twoPlayerButton);
+        newGameButtons.setAlignment(Pos.CENTER);
+        newGameButtons.setSpacing(10);
+
+        vBox.getChildren().add(1 , newGameButtons);
 
         Label label1 = new Label();
         Slider totalBalls = new Slider(8 , 14 , 10);
@@ -52,20 +58,25 @@ public class MainMenu extends Application {
 
 
         setUpSlider(label1, totalBalls);
-
         setUpSlider(label2, initBalls);
-        newGameButton.setOnAction(new EventHandler<ActionEvent>() {
+        setUpButtons(newGameButton, totalBalls, initBalls);
+        setUpButtons(twoPlayerButton, totalBalls, initBalls);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private void setUpButtons(Button button, Slider totalBalls, Slider initBalls) {
+        button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 try {
-                    controller.startNewGame((int) Math.floor(totalBalls.getValue()) , (int) Math.floor(initBalls.getValue()));
+                    controller.startNewGame(!button.getText().equals("New Game"), (int) Math.floor(totalBalls.getValue()) ,
+                            (int) Math.floor(initBalls.getValue()));
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }
         });
-        stage.setScene(scene);
-        stage.show();
     }
 
     private void setUpSlider(Label label1, Slider totalBalls) {
