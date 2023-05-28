@@ -41,7 +41,9 @@ public class GameMenu extends Application {
         Scene scene = new Scene(gamePane);
         gamePane.getChildren().add(game.getCenterCircle());
         gamePane.getChildren().get(0).requestFocus();
-        game.initializeBall(gamePane);
+        game.initializeBall(gamePane, "down");
+        if (game.is2Player())
+            game.initializeBall(gamePane , "up");
 
         HBox hBox = new HBox();
         Text freezeCoolDown = new Text();
@@ -87,13 +89,23 @@ public class GameMenu extends Application {
                     mediaPlayer.seek(Duration.ZERO);
                     mediaPlayer.pause();
                 });
-                if (game.is2Player())
-                    controller.shootBall(game, game.getAllBalls().get(game.getAllBalls().size() - 1),
-                            gamePane, progressBar, showScore , keyName);
-                else
+                if (game.is2Player()) {
+                    if (keyName.equals("Enter")) {
+                        controller.shootBall(game, game.getUpBall(),
+                                gamePane, progressBar, showScore, keyName);
+                        game.initializeBall(gamePane, "up");
+                    }
+                    else {
+                        controller.shootBall(game, game.getDownBall(),
+                                gamePane, progressBar, showScore, keyName);
+                        game.initializeBall(gamePane, "down");
+                    }
+                }
+                else {
                     controller.shootBall(game, game.getAllBalls().get(game.getAllBalls().size() - 1),
                             gamePane, progressBar, showScore);
-                game.initializeBall(gamePane);
+                    game.initializeBall(gamePane, "down");
+                }
 
                 int shotBalls = game.getTotalBalls() - game.getBallsLeft(); // change phase
                 controller.checkPhaseChange(shotBalls, game);

@@ -1,6 +1,7 @@
 package model;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import view.RotationAnimation;
 
@@ -9,6 +10,8 @@ import java.util.HashMap;
 
 public class Game {
     private final boolean is2Player;
+    private Ball upBall;
+    private Ball downBall;
     private User currentPlayer;
     private int phase;
     private final CenterCircle centerCircle;
@@ -61,6 +64,14 @@ public class Game {
         this.currentPlayer = currentPlayer;
     }
 
+    public Ball getUpBall() {
+        return upBall;
+    }
+
+    public Ball getDownBall() {
+        return downBall;
+    }
+
     public int getPhase() {
         return phase;
     }
@@ -89,9 +100,21 @@ public class Game {
         this.gameOver = gameOver;
     }
 
-    public void initializeBall(Pane gamePane) {
+    public void initializeBall(Pane gamePane , String place) {
         ballsLeft--;
-        Ball ball = new Ball(600);
+        Ball ball = null;
+        switch (place) {
+            case "up" -> {
+                ball = new Ball(40);
+                ball.setFill(Color.BLUE);
+                upBall = ball;
+            }
+            case "down" -> {
+                ball = new Ball(600);
+                ball.setFill(Color.RED);
+                downBall = ball;
+            }
+        }
         if (ballsLeft <= 0) {
             gameOver = true;
         }

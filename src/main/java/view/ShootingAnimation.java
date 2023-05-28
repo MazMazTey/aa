@@ -54,7 +54,7 @@ public class ShootingAnimation extends Transition {
         isStopped = false;
         freezeCoolDown = progressBar;
         heightLimitDown = 440;
-        heightLimitUp = 240;
+        heightLimitUp = 160;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class ShootingAnimation extends Transition {
         }
         else {
             y = ball.getCenterY() + 20;
-            if ((y <= 440 && game.getPhase() < 4) || (
+            if ((y >= heightLimitUp && game.getPhase() < 4) || (
                     game.getPhase() == 4 && Math.sqrt(
                             Math.pow(centerCircle.getCenterX() - ball.getCenterX() , 2) +
                                     Math.pow(centerCircle.getCenterY() - ball.getCenterY() , 2)) <= 160)) {

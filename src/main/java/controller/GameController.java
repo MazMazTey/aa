@@ -221,30 +221,32 @@ public class GameController {
 
     public void changePhase(int phase, Game game, Pane gamePane, Ball ball) {
         switch (phase) {
-            case 1:
-                new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
-                break;
-            case 2:
+            case 1 -> new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
+            case 2 -> {
                 if (!started) {
                     randomReverse(game);
                     started = true;
                 }
                 new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
                 for (Ball ball1 : game.getBallsOnTheCircle()) {
-                    ball1.setDefaultColor(Color.GREENYELLOW);
-                    if (!game.isSlowed()) ball1.setFill(Color.GREENYELLOW);
+                    if (!game.is2Player()) {
+                        ball1.setDefaultColor(Color.GREENYELLOW);
+                        if (!game.isSlowed()) ball1.setFill(Color.GREENYELLOW);
+                    }
                     if (ball1.getPhase2Animation() == null) {
                         Phase2Animation phase2Animation = new Phase2Animation(
                                 game, gamePane, ball1, this);
                         phase2Animation.changeBallSize();
                     }
                 }
-                break;
-            case 3:
+            }
+            case 3 -> {
                 new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
                 for (Ball ball1 : game.getBallsOnTheCircle()) {
-                    ball1.setDefaultColor(Color.CRIMSON);
-                    if (!game.isSlowed()) ball1.setFill(Color.CRIMSON);
+                    if (!game.is2Player()) {
+                        ball1.setDefaultColor(Color.CRIMSON);
+                        if (!game.isSlowed()) ball1.setFill(Color.CRIMSON);
+                    }
                     if (ball1.getPhase2Animation() == null) {
                         Phase2Animation phase2Animation = new Phase2Animation(
                                 game, gamePane, ball1, this);
@@ -253,21 +255,23 @@ public class GameController {
                     if (ball1.getPhase3Animation() == null)
                         new Phase3Animation(game, this, gamePane, ball1).fade();
                 }
-                break;
-                    case 4:
-                        new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
-                        for (Ball ball1 : game.getBallsOnTheCircle()) {
-                            ball1.setDefaultColor(Color.DARKGOLDENROD);
-                            if (!game.isSlowed()) ball1.setFill(Color.DARKGOLDENROD);
-                            if (ball1.getPhase2Animation() == null) {
-                                Phase2Animation phase2Animation = new Phase2Animation(
-                                        game, gamePane, ball1, this);
-                                phase2Animation.changeBallSize();
-                            }
-                            if (ball1.getPhase3Animation() == null)
-                                new Phase3Animation(game, this, gamePane, ball1).fade();
-                        }
-                        break;
+            }
+            case 4 -> {
+                new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
+                for (Ball ball1 : game.getBallsOnTheCircle()) {
+                    if (!game.is2Player()) {
+                        ball1.setDefaultColor(Color.DARKGOLDENROD);
+                        if (!game.isSlowed()) ball1.setFill(Color.DARKGOLDENROD);
+                    }
+                    if (ball1.getPhase2Animation() == null) {
+                        Phase2Animation phase2Animation = new Phase2Animation(
+                                game, gamePane, ball1, this);
+                        phase2Animation.changeBallSize();
+                    }
+                    if (ball1.getPhase3Animation() == null)
+                        new Phase3Animation(game, this, gamePane, ball1).fade();
+                }
+            }
         }
     }
 
