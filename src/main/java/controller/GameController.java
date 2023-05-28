@@ -229,7 +229,7 @@ public class GameController {
                     }
                 }
                 break;
-            case 3, 4:
+            case 3:
                 new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
                 for (Ball ball1 : game.getBallsOnTheCircle()) {
                     ball1.setDefaultColor(Color.CRIMSON);
@@ -243,8 +243,20 @@ public class GameController {
                         new Phase3Animation(game, this, gamePane, ball1).fade();
                 }
                 break;
-//                    case 4:
-//                        break;
+                    case 4:
+                        new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
+                        for (Ball ball1 : game.getBallsOnTheCircle()) {
+                            ball1.setDefaultColor(Color.DARKGOLDENROD);
+                            if (!game.isSlowed()) ball1.setFill(Color.DARKGOLDENROD);
+                            if (ball1.getPhase2Animation() == null) {
+                                Phase2Animation phase2Animation = new Phase2Animation(
+                                        game, gamePane, ball1, this);
+                                phase2Animation.changeBallSize();
+                            }
+                            if (ball1.getPhase3Animation() == null)
+                                new Phase3Animation(game, this, gamePane, ball1).fade();
+                        }
+                        break;
         }
     }
 

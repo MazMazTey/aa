@@ -40,7 +40,10 @@ public class ShootingAnimation extends Transition {
     protected void interpolate(double v) {
         if (game.getPhase() <= 4) {
             double y = ball.getCenterY() - 20;
-            if (y <= 340) {
+            if ((y <= 340 && game.getPhase() < 4) || (
+                    game.getPhase() == 4 && Math.sqrt(
+                            Math.pow(centerCircle.getCenterX() - ball.getCenterX() , 2) +
+                            Math.pow(centerCircle.getCenterY() - ball.getCenterY() , 2)) <= 160)) {
                 this.stop();
                 isStopped = true;
                 game.addBallToCircle(ball);
