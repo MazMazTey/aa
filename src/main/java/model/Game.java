@@ -11,6 +11,7 @@ public class Game {
     private User currentPlayer;
     private int phase;
     private final CenterCircle centerCircle;
+    private final ArrayList<Ball> allBalls;
     private final ArrayList<Ball> ballsOnTheCircle;
     private final HashMap<Ball , Line> ballsAndLines;
     private int ballsLeft;
@@ -29,10 +30,11 @@ public class Game {
     public Game(int totalBalls, int initBalls) {
         this.initBalls = initBalls;
         this.totalBalls = totalBalls;
-        ballsLeft = this.totalBalls;
+        ballsLeft = this.totalBalls + 1;
         this.phase = 1;
         currentPlayer = AA.getLoggedInUser();
         centerCircle = new CenterCircle();
+        allBalls = new ArrayList<>();
         ballsOnTheCircle = new ArrayList<>();
         ballsAndLines = new HashMap<>();
         isPaused = false;
@@ -80,14 +82,16 @@ public class Game {
         this.gameOver = gameOver;
     }
 
-    public Ball initializeBall(Pane gamePane) {
+    public void initializeBall(Pane gamePane) {
         ballsLeft--;
+        Ball ball = new Ball();
         if (ballsLeft <= 0) {
             gameOver = true;
         }
-        Ball ball = new Ball();
-        gamePane.getChildren().add(ball);
-        return ball;
+        else {
+            gamePane.getChildren().add(ball);
+            allBalls.add(ball);
+        }
     }
 
     public RotationAnimation getRotationAnimation() {
@@ -150,14 +154,6 @@ public class Game {
         return initBalls;
     }
 
-    public boolean isRotationReversed() {
-        return rotationReversed;
-    }
-
-    public void setRotationReversed(boolean rotationReversed) {
-        this.rotationReversed = rotationReversed;
-    }
-
     public double getSpeed() {
         return speed;
     }
@@ -168,5 +164,9 @@ public class Game {
 
     public void toggleRotationReversion() {
         rotationReversed = !rotationReversed;
+    }
+
+    public ArrayList<Ball> getAllBalls() {
+        return allBalls;
     }
 }

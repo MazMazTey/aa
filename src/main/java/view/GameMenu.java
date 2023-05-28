@@ -44,12 +44,12 @@ public class GameMenu extends Application {
         Scene scene = new Scene(gamePane);
         gamePane.getChildren().add(game.getCenterCircle());
         gamePane.getChildren().get(0).requestFocus();
-        //Ball ball = game.initializeBall(gamePane);
+        game.initializeBall(gamePane);
 
         HBox hBox = new HBox();
         Text freezeCoolDown = new Text();
         Text numberOfBallsLeft = new Text("Number of balls left : " + game.getBallsLeft());
-        ProgressBar progressBar = new ProgressBar(1);
+        ProgressBar progressBar = new ProgressBar(0);
         Text showScore = new Text("Score : " + game.getScore());
         controller.createHbox(hBox, freezeCoolDown, numberOfBallsLeft, progressBar, showScore);
         gamePane.getChildren().add(hBox);
@@ -85,7 +85,6 @@ public class GameMenu extends Application {
                 }
                 if (keyName.equals(game.getCurrentPlayer().getShootBallKey())
                         && !game.isGameOver() && !game.isPaused() && game.isGameReady()) {
-                    Ball ball = game.initializeBall(gamePane);
 
                     mediaPlayer.play();
                     mediaPlayer.setOnEndOfMedia(new Runnable() {
@@ -95,7 +94,9 @@ public class GameMenu extends Application {
                             mediaPlayer.pause();
                         }
                     });
-                    controller.shootBall(game, ball, gamePane, progressBar, showScore);
+                    controller.shootBall(game, game.getAllBalls().get(game.getAllBalls().size() - 1),
+                            gamePane, progressBar, showScore);
+                    game.initializeBall(gamePane);
 
                     int shotBalls = game.getTotalBalls() - game.getBallsLeft(); // change phase
                     controller.checkPhaseChange(shotBalls, game);
@@ -113,6 +114,14 @@ public class GameMenu extends Application {
                         !game.isPaused() && game.isGameReady() && progressBar.getProgress() >= 0.99) {
                     progressBar.setProgress(0);
                     controller.freeze(game);
+                } else if (game.getPhase() == 4) {
+                    if (keyName.equals(game.getCurrentPlayer().getMoveRightKey()) &&
+                            !game.isPaused() && game.isGameReady()) {
+                        controller.moveRight(game.getAllBalls().get(game.getAllBalls().size() - 1));
+                    } else if (keyName.equals(game.getCurrentPlayer().getMoveLeftKey()) &&
+                            !game.isPaused() && game.isGameReady()) {
+                        controller.moveLeft(game.getAllBalls().get(game.getAllBalls().size() - 1));
+                    }
                 }
             }
         });

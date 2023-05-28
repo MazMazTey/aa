@@ -102,4 +102,14 @@ public class GameMenuController {
     public void lose(Game game, Pane gamePane) {
         controller.lose(game , gamePane);
     }
+
+    public void moveRight(Ball ball) {
+        if (ball.getCenterX() <= 440)
+            ball.setCenterX(ball.getCenterX() + 15);
+    }
+
+    public void moveLeft(Ball ball) {
+        if (ball.getCenterX() >= 160)
+            ball.setCenterX(ball.getCenterX() - 15);
+    }
 }

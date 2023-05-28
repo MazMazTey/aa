@@ -14,6 +14,8 @@ public class User implements Comparable<User>{
     private String shootBallKey;
     private String freezeKey;
     private String pauseKey;
+    private String moveLeftKey;
+    private String moveRightKey;
 
     public User(String username, String password, boolean isGuest) {
         this.username = username;
@@ -24,6 +26,8 @@ public class User implements Comparable<User>{
         shootBallKey = "Space";
         freezeKey = "Tab";
         pauseKey = "P";
+        moveRightKey = "Right";
+        moveLeftKey = "Left";
     }
 
     public String getUsername() {
@@ -96,6 +100,22 @@ public class User implements Comparable<User>{
 
     public void setPauseKey(String pauseKey) {
         this.pauseKey = pauseKey;
+    }
+
+    public String getMoveLeftKey() {
+        return moveLeftKey;
+    }
+
+    public void setMoveLeftKey(String moveLeftKey) {
+        this.moveLeftKey = moveLeftKey;
+    }
+
+    public String getMoveRightKey() {
+        return moveRightKey;
+    }
+
+    public void setMoveRightKey(String moveRightKey) {
+        this.moveRightKey = moveRightKey;
     }
 
     public int getFreezeTime() {
