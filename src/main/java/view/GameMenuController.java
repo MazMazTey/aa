@@ -35,7 +35,7 @@ public class GameMenuController {
         controller.pause(stage, scene, game);
     }
 
-    public void createHbox(HBox hBox, Text freezeCoolDown
+    public void createHBox(HBox hBox, Text freezeCoolDown
             , Text numberOfBallsLeft, ProgressBar progressBar, Text score) {
         hBox.setAlignment(Pos.CENTER);
         hBox.getChildren().add(numberOfBallsLeft);

@@ -50,7 +50,7 @@ public class GameMenu extends Application {
         Text numberOfBallsLeft = new Text("Number of balls left : " + game.getBallsLeft());
         ProgressBar progressBar = new ProgressBar(0);
         Text showScore = new Text("Score : " + game.getScore());
-        controller.createHbox(hBox, freezeCoolDown, numberOfBallsLeft, progressBar, showScore);
+        controller.createHBox(hBox, freezeCoolDown, numberOfBallsLeft, progressBar, showScore);
         gamePane.getChildren().add(hBox);
         Text showPhase = new Text("Phase : " + game.getPhase());
         showPhase.setLayoutX(540);

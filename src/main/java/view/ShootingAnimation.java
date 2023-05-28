@@ -23,7 +23,7 @@ public class ShootingAnimation extends Transition {
     private final Text showScore;
     private String keyPressed;
     private int heightLimitUp;
-    private int heightLimitDown;
+    private final int heightLimitDown;
 
     public ShootingAnimation(Game game, Pane gamePane, Ball ball, CenterCircle centerCircle,
                              ProgressBar progressBar, GameController gameController , Text showScore) {
