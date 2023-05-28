@@ -1,6 +1,7 @@
 package model;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import view.RotationAnimation;
 
@@ -8,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Game {
+    private final boolean is2Player;
+    private Ball upBall;
+    private Ball downBall;
     private User currentPlayer;
     private int phase;
     private final CenterCircle centerCircle;
@@ -27,13 +31,15 @@ public class Game {
     private double speed;
     private int score;
 
-    public Game(int totalBalls, int initBalls) {
+    public Game(boolean is2Player, int totalBalls, int initBalls) {
+        this.is2Player = is2Player;
         this.initBalls = initBalls;
         this.totalBalls = totalBalls;
         ballsLeft = this.totalBalls + 1;
         this.phase = 1;
         currentPlayer = AA.getLoggedInUser();
-        centerCircle = new CenterCircle();
+        if (is2Player) centerCircle = new CenterCircle(300);
+        else centerCircle = new CenterCircle(200);
         allBalls = new ArrayList<>();
         ballsOnTheCircle = new ArrayList<>();
         ballsAndLines = new HashMap<>();
@@ -46,12 +52,24 @@ public class Game {
         score = 0;
     }
 
+    public boolean is2Player() {
+        return is2Player;
+    }
+
     public User getCurrentPlayer() {
         return currentPlayer;
     }
 
     public void setCurrentPlayer(User currentPlayer) {
         this.currentPlayer = currentPlayer;
+    }
+
+    public Ball getUpBall() {
+        return upBall;
+    }
+
+    public Ball getDownBall() {
+        return downBall;
     }
 
     public int getPhase() {
@@ -84,13 +102,37 @@ public class Game {
 
     public void initializeBall(Pane gamePane) {
         ballsLeft--;
-        Ball ball = new Ball();
+        Ball ball = new Ball(600);
         if (ballsLeft <= 0) {
             gameOver = true;
         }
         else {
             gamePane.getChildren().add(ball);
             allBalls.add(ball);
+        }
+    }
+
+    public void initializeBall(Pane gamePane , String place) {
+        ballsLeft--;
+        Ball ball = null;
+        switch (place) {
+            case "up" -> {
+                ball = new Ball(40);
+                ball.setFill(Color.BLUE);
+                upBall = ball;
+            }
+            case "down" -> {
+                ball = new Ball(600);
+                ball.setFill(Color.RED);
+                downBall = ball;
+            }
+        }
+        if (ballsLeft <= 0) {
+            gameOver = true;
+        }
+        else {
+            gamePane.getChildren().add(ball);
+//            allBalls.add(ball);
         }
     }
 

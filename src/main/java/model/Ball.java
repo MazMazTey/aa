@@ -13,8 +13,8 @@ public class Ball extends Circle {
     private Phase3Animation phase3Animation;
     private Color defaultColor;
     private Text number;
-    public Ball() {
-        super(300, 600, 8, Color.BLACK);
+    public Ball(int height) {
+        super(300, height, 8, Color.BLACK);
         number = new Text("5"); // TODO add number to balls
         rotationAnimation = null;
         phase2Animation = null;

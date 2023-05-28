@@ -27,11 +27,15 @@ public class GameMenuController {
     public void shootBall(Game game, Ball ball , Pane gamePane, ProgressBar progressBar , Text showScore) {
         controller.shootBall(game , ball , gamePane , progressBar , showScore);
     }
+
+    public void shootBall(Game game, Ball ball , Pane gamePane, ProgressBar progressBar , Text showScore , String keyName) {
+        controller.shootBall(game , ball , gamePane , progressBar , showScore , keyName);
+    }
     public void pause(Stage stage , Scene scene, Game game) throws Exception {
         controller.pause(stage, scene, game);
     }
 
-    public void createHbox(HBox hBox, Text freezeCoolDown
+    public void createHBox(HBox hBox, Text freezeCoolDown
             , Text numberOfBallsLeft, ProgressBar progressBar, Text score) {
         hBox.setAlignment(Pos.CENTER);
         hBox.getChildren().add(numberOfBallsLeft);

@@ -2,8 +2,6 @@ package controller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,6 +32,13 @@ public class GameController {
                           ProgressBar progressBar, Text showScore) {
         ShootingAnimation animation = new ShootingAnimation(game, gamePane,
                 ball, game.getCenterCircle(), progressBar, this, showScore);
+        animation.play();
+    }
+
+    public void shootBall(Game game, Ball ball, Pane gamePane,
+                          ProgressBar progressBar, Text showScore , String keyName) {
+        ShootingAnimation animation = new ShootingAnimation(game, gamePane,
+                ball, game.getCenterCircle(), progressBar, this, showScore , keyName);
         animation.play();
     }
 
@@ -68,25 +73,19 @@ public class GameController {
         Button saveButton = new Button("Save Game");
         Button muteButton = new Button("Mute Song");
         Button changeSongButton = new Button("Change Song");
-        backButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                stage.setScene(scene);
-                game.setPaused(false);
-                resumeAllAnimations(game);
-            }
+        backButton.setOnAction(actionEvent -> {
+            stage.setScene(scene);
+            game.setPaused(false);
+            resumeAllAnimations(game);
         });
-        restartButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                try {
-                    stopAllAnimations(game);
-                    game.setGameOver(true);
-                    new GameMenu(new Game(totalBalls,
-                            game.getInitBalls())).start(RegisterMenu.stage);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+        restartButton.setOnAction(actionEvent -> {
+            try {
+                stopAllAnimations(game);
+                game.setGameOver(true);
+                new GameMenu(new Game(game.is2Player(), totalBalls,
+                        game.getInitBalls())).start(RegisterMenu.stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
         exitButton.setOnAction(actionEvent -> {
@@ -98,27 +97,16 @@ public class GameController {
                 throw new RuntimeException(e);
             }
         });
-        saveButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                // TODO implement save game
-            }
+        saveButton.setOnAction(actionEvent -> {
+            // TODO implement save game
         });
-        muteButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                Settings.muteSong(muteButton);
-            }
-        });
-        changeSongButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                try {
-                    Stage newStage = new Stage();
-                    new SelectSong().start(newStage);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+        muteButton.setOnAction(actionEvent -> Settings.muteSong(muteButton));
+        changeSongButton.setOnAction(actionEvent -> {
+            try {
+                Stage newStage = new Stage();
+                new SelectSong().start(newStage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
         vBox.getChildren().add(backButton);
@@ -136,32 +124,26 @@ public class GameController {
 
     public void randomReverse(Game game) {
         int delay = new Random().nextInt(4000, 6000);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                game.toggleRotationReversion();
-                if (!game.isSlowed()) {
-                    for (Ball ball1 : game.getBallsOnTheCircle()) {
-                        if (ball1.getRotationAnimation() != null) {
-                            ball1.getRotationAnimation().getTimeLine().setRate(game.getSpeed());
-                        }
+        Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, actionEvent -> {
+            game.toggleRotationReversion();
+            if (!game.isSlowed()) {
+                for (Ball ball1 : game.getBallsOnTheCircle()) {
+                    if (ball1.getRotationAnimation() != null) {
+                        ball1.getRotationAnimation().getTimeLine().setRate(game.getSpeed());
                     }
-                } else {
-                    for (Ball ball1 : game.getBallsOnTheCircle()) {
-                        if (ball1.getRotationAnimation() != null) {
-                            ball1.getRotationAnimation().getTimeLine().setRate(-game.getSpeed());
-                        }
+                }
+            } else {
+                for (Ball ball1 : game.getBallsOnTheCircle()) {
+                    if (ball1.getRotationAnimation() != null) {
+                        ball1.getRotationAnimation().getTimeLine().setRate(-game.getSpeed());
                     }
                 }
             }
         }), new KeyFrame(Duration.millis(delay)));
         timeline.setCycleCount(1);
-        timeline.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                game.setSpeed(-game.getSpeed());
-                randomReverse(game);
-            }
+        timeline.setOnFinished(actionEvent -> {
+            game.setSpeed(-game.getSpeed());
+            randomReverse(game);
         });
         timeline.play();
     }
@@ -214,30 +196,32 @@ public class GameController {
 
     public void changePhase(int phase, Game game, Pane gamePane, Ball ball) {
         switch (phase) {
-            case 1:
-                new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
-                break;
-            case 2:
+            case 1 -> new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
+            case 2 -> {
                 if (!started) {
                     randomReverse(game);
                     started = true;
                 }
                 new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
                 for (Ball ball1 : game.getBallsOnTheCircle()) {
-                    ball1.setDefaultColor(Color.GREENYELLOW);
-                    if (!game.isSlowed()) ball1.setFill(Color.GREENYELLOW);
+                    if (!game.is2Player()) {
+                        ball1.setDefaultColor(Color.GREENYELLOW);
+                        if (!game.isSlowed()) ball1.setFill(Color.GREENYELLOW);
+                    }
                     if (ball1.getPhase2Animation() == null) {
                         Phase2Animation phase2Animation = new Phase2Animation(
                                 game, gamePane, ball1, this);
                         phase2Animation.changeBallSize();
                     }
                 }
-                break;
-            case 3:
+            }
+            case 3 -> {
                 new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
                 for (Ball ball1 : game.getBallsOnTheCircle()) {
-                    ball1.setDefaultColor(Color.CRIMSON);
-                    if (!game.isSlowed()) ball1.setFill(Color.CRIMSON);
+                    if (!game.is2Player()) {
+                        ball1.setDefaultColor(Color.CRIMSON);
+                        if (!game.isSlowed()) ball1.setFill(Color.CRIMSON);
+                    }
                     if (ball1.getPhase2Animation() == null) {
                         Phase2Animation phase2Animation = new Phase2Animation(
                                 game, gamePane, ball1, this);
@@ -246,21 +230,23 @@ public class GameController {
                     if (ball1.getPhase3Animation() == null)
                         new Phase3Animation(game, this, gamePane, ball1).fade();
                 }
-                break;
-                    case 4:
-                        new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
-                        for (Ball ball1 : game.getBallsOnTheCircle()) {
-                            ball1.setDefaultColor(Color.DARKGOLDENROD);
-                            if (!game.isSlowed()) ball1.setFill(Color.DARKGOLDENROD);
-                            if (ball1.getPhase2Animation() == null) {
-                                Phase2Animation phase2Animation = new Phase2Animation(
-                                        game, gamePane, ball1, this);
-                                phase2Animation.changeBallSize();
-                            }
-                            if (ball1.getPhase3Animation() == null)
-                                new Phase3Animation(game, this, gamePane, ball1).fade();
-                        }
-                        break;
+            }
+            case 4 -> {
+                new RotationAnimation(game, gamePane, game.getCenterCircle(), ball).rotateBall();
+                for (Ball ball1 : game.getBallsOnTheCircle()) {
+                    if (!game.is2Player()) {
+                        ball1.setDefaultColor(Color.DARKGOLDENROD);
+                        if (!game.isSlowed()) ball1.setFill(Color.DARKGOLDENROD);
+                    }
+                    if (ball1.getPhase2Animation() == null) {
+                        Phase2Animation phase2Animation = new Phase2Animation(
+                                game, gamePane, ball1, this);
+                        phase2Animation.changeBallSize();
+                    }
+                    if (ball1.getPhase3Animation() == null)
+                        new Phase3Animation(game, this, gamePane, ball1).fade();
+                }
+            }
         }
     }
 
