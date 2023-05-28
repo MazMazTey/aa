@@ -8,7 +8,6 @@ import model.CenterCircle;
 import model.Game;
 
 public class StartGameAnimation extends Transition {
-    private int initBalls;
     private final Game game;
     private final Pane gamePane;
     private final Ball ball;
@@ -31,7 +30,7 @@ public class StartGameAnimation extends Transition {
     @Override
     protected void interpolate(double v) {
         double y = ball.getCenterY() - 20;
-        if (y <= 340) {
+        if ((!game.is2Player() && y <= 340) || game.is2Player() && y <= 440) {
             this.stop();
             isStopped = true;
             game.addBallToCircle(ball);

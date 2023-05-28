@@ -3,12 +3,9 @@ package view;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -74,54 +71,53 @@ public class GameMenu extends Application {
         };
         timer.scheduleAtFixedRate(task, 0, 10);
         initializeMap(game.getInitBalls(), game, gamePane);
-        game.getCenterCircle().setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                String keyName = keyEvent.getCode().getName();
-                if (game.isGameOver()) {
-                    System.out.println("Game Over!");
-                    VBox vBox = new VBox();
-                    controller.result(game, vBox, game.getScore(), gamePane);
-                }
-                if (keyName.equals(game.getCurrentPlayer().getShootBallKey())
-                        && !game.isGameOver() && !game.isPaused() && game.isGameReady()) {
+        game.getCenterCircle().setOnKeyPressed(keyEvent -> {
+            String keyName = keyEvent.getCode().getName();
+            if (game.isGameOver()) {
+                System.out.println("Game Over!");
+                VBox vBox = new VBox();
+                controller.result(game, vBox, game.getScore(), gamePane);
+            }
+            if ((keyName.equals(game.getCurrentPlayer().getShootBallKey()) ||
+                    (keyName.equals("Enter") && game.is2Player()))
+                    && !game.isGameOver() && !game.isPaused() && game.isGameReady()) {
 
-                    mediaPlayer.play();
-                    mediaPlayer.setOnEndOfMedia(new Runnable() {
-                        @Override
-                        public void run() {
-                            mediaPlayer.seek(Duration.ZERO);
-                            mediaPlayer.pause();
-                        }
-                    });
+                mediaPlayer.play();
+                mediaPlayer.setOnEndOfMedia(() -> {
+                    mediaPlayer.seek(Duration.ZERO);
+                    mediaPlayer.pause();
+                });
+                if (game.is2Player())
+                    controller.shootBall(game, game.getAllBalls().get(game.getAllBalls().size() - 1),
+                            gamePane, progressBar, showScore , keyName);
+                else
                     controller.shootBall(game, game.getAllBalls().get(game.getAllBalls().size() - 1),
                             gamePane, progressBar, showScore);
-                    game.initializeBall(gamePane);
+                game.initializeBall(gamePane);
 
-                    int shotBalls = game.getTotalBalls() - game.getBallsLeft(); // change phase
-                    controller.checkPhaseChange(shotBalls, game);
+                int shotBalls = game.getTotalBalls() - game.getBallsLeft(); // change phase
+                controller.checkPhaseChange(shotBalls, game);
 
-                    numberOfBallsLeft.setText("Number of balls left : " + game.getBallsLeft());
-                    showPhase.setText("Phase : " + game.getPhase());
-                } else if (keyName.equals(game.getCurrentPlayer().getPauseKey()) &&
+                numberOfBallsLeft.setText("Number of balls left : " + game.getBallsLeft());
+                showPhase.setText("Phase : " + game.getPhase());
+            } else if (keyName.equals(game.getCurrentPlayer().getPauseKey()) &&
+                    !game.isPaused() && game.isGameReady()) {
+                try {
+                    controller.pause(stage, scene, game);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (keyName.equals(game.getCurrentPlayer().getFreezeKey()) &&
+                    !game.isPaused() && game.isGameReady() && progressBar.getProgress() >= 0.99) {
+                progressBar.setProgress(0);
+                controller.freeze(game);
+            } else if (game.getPhase() == 4) {
+                if (keyName.equals(game.getCurrentPlayer().getMoveRightKey()) &&
                         !game.isPaused() && game.isGameReady()) {
-                    try {
-                        controller.pause(stage, scene, game);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                } else if (keyName.equals(game.getCurrentPlayer().getFreezeKey()) &&
-                        !game.isPaused() && game.isGameReady() && progressBar.getProgress() >= 0.99) {
-                    progressBar.setProgress(0);
-                    controller.freeze(game);
-                } else if (game.getPhase() == 4) {
-                    if (keyName.equals(game.getCurrentPlayer().getMoveRightKey()) &&
-                            !game.isPaused() && game.isGameReady()) {
-                        controller.moveRight(game.getAllBalls().get(game.getAllBalls().size() - 1));
-                    } else if (keyName.equals(game.getCurrentPlayer().getMoveLeftKey()) &&
-                            !game.isPaused() && game.isGameReady()) {
-                        controller.moveLeft(game.getAllBalls().get(game.getAllBalls().size() - 1));
-                    }
+                    controller.moveRight(game.getAllBalls().get(game.getAllBalls().size() - 1));
+                } else if (keyName.equals(game.getCurrentPlayer().getMoveLeftKey()) &&
+                        !game.isPaused() && game.isGameReady()) {
+                    controller.moveLeft(game.getAllBalls().get(game.getAllBalls().size() - 1));
                 }
             }
         });
@@ -131,20 +127,12 @@ public class GameMenu extends Application {
 
     private void initializeMap(int initBalls, Game game,
                                Pane gamePane) {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                Ball ball = new Ball();
-                new StartGameAnimation(game, gamePane, ball, game.getCenterCircle()).play();
-            }
+        Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, actionEvent -> {
+            Ball ball = new Ball(600);
+            new StartGameAnimation(game, gamePane, ball, game.getCenterCircle()).play();
         }), new KeyFrame(Duration.millis(2000 / initBalls)));
         timeline.setCycleCount(initBalls);
         timeline.play();
-        timeline.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                game.setGameReady(true);
-            }
-        });
+        timeline.setOnFinished(actionEvent -> game.setGameReady(true));
     }
 }

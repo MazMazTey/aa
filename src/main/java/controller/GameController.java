@@ -37,6 +37,13 @@ public class GameController {
         animation.play();
     }
 
+    public void shootBall(Game game, Ball ball, Pane gamePane,
+                          ProgressBar progressBar, Text showScore , String keyName) {
+        ShootingAnimation animation = new ShootingAnimation(game, gamePane,
+                ball, game.getCenterCircle(), progressBar, this, showScore , keyName);
+        animation.play();
+    }
+
     public void pause(Stage stage, Scene scene, Game game) throws Exception {
         int totalBalls = game.getTotalBalls();
         pauseAllAnimations(game);
@@ -82,7 +89,7 @@ public class GameController {
                 try {
                     stopAllAnimations(game);
                     game.setGameOver(true);
-                    new GameMenu(new Game(game.isIs2Player(), totalBalls,
+                    new GameMenu(new Game(game.is2Player(), totalBalls,
                             game.getInitBalls())).start(RegisterMenu.stage);
                 } catch (Exception e) {
                     throw new RuntimeException(e);

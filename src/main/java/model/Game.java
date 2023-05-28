@@ -49,7 +49,7 @@ public class Game {
         score = 0;
     }
 
-    public boolean isIs2Player() {
+    public boolean is2Player() {
         return is2Player;
     }
 
@@ -91,7 +91,7 @@ public class Game {
 
     public void initializeBall(Pane gamePane) {
         ballsLeft--;
-        Ball ball = new Ball();
+        Ball ball = new Ball(600);
         if (ballsLeft <= 0) {
             gameOver = true;
         }
